@@ -60,7 +60,7 @@ body {
 <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar"   >
     <ul class="navbar-nav "  >
       <li class="nav-item ">
-        <a class="nav-link"  style="color:white;text-decoration:none;" href="CETproj.html">Welcome Visitor!</a>
+        <a class="nav-link"  style="color:white;text-decoration:none;" href="CETproj.html">Welcome Jasper Malfetria!</a>
       </li>
 
 
@@ -72,10 +72,15 @@ body {
 <div class="collapse navbar-collapse ml-1   " id="collapsibleNavbar"  >
 <div class=" d-flex ml-auto " style="">
 
- <span class="navline my-1 " ></span>
 
     <ul class="navbar-nav "  >
-	
+	  <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html"><u>Manage Books</u></a>
+      </li>	
+	   <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Manage Transactions</a>
+      </li>	 
+ <span class="navline my-1 " ></span>
       <li class="nav-item bg-sm-dark">
         <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Other Resources</a>
       </li>	  
@@ -138,8 +143,27 @@ body {
 
 <div class="rightblock ml-0 ml-lg-3 pb-4 d-flex align-items-center justify-content-center" style="flex-direction:column;"  >
 
-<div class="pt-3 sticktodapat">
-<div class="searchbox d-flex align-items-center">
+<div class="pt-3 sticktodapat d-none d-lg-block" style="box-shadow:none;border-bottom:2px solid #b3b5b7;">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item advtabs">
+      <a href="ManageBookspageAdd.html" class="nav-link  pt-3" ><div class="d-flex align-items-center justify-content-center "><i class="fas fa-shopping-cart"></i></div><div class="mx-3">Add Books</div></a>
+    </li>
+    <li class="nav-item advtabs">
+      <a href="ManageBookspageEdit.html" class="nav-link active pt-3" data-toggle="tab" href="#menu1"><div class="d-flex align-items-center justify-content-center"><i class="fas fa-file"></i></div>Edit Books</a>
+    </li>
+
+  </ul>
+</div>
+
+
+<div class="logincontainer browsecontainer  d-flex  pb-3 " style="width:99.3%;">
+<!-- Nav tabs -->
+
+
+  <!-- Tab panes -->
+<div class="tab-content justify-content-center">
+    <div id="home" class="container tab-pane active mt-3">
+	<div class="searchbox d-flex align-items-center">
 <div class="input-group ml-2 d-inline-flex" style="">
 <i class="fas fa-search mr-2 align-items-center  my-auto"></i>
 <input type="text" class="form-control my-auto" placeholder="Search " style="border:0;height:30px;padding-left:2px; outline:none;box-shadow:none;">
@@ -150,93 +174,106 @@ body {
     </div>
 </div>
 </div>
-</div>
+
+	<div class="d-flex addbookform justify-content-center px-0 mx-0 mt-3">
+	
+      		<form class="" action="confirmation.php" method="post" autocomplete="false" autocomplete="off"  >
+				<div class="modal-header bookimageinput align-items-center justify-content-center py-2  d-flex ">				
+					<div class="bookimageaddbook  px-2 pt-2">
+                    <div class="bookimagebox d-flex align-items-center justify-content-center h-100  ">
+                    <img class="bookimg " src="assets/harry.jpg" alt="Card image"  >
+				    
+                    </div>
+				
+                    </div>	
+					<div class="mt-2">
+					<input  type='file' class="fileinput"  onchange="readURL(this);" />
+					</div>
+				</div>
+				<div class="modal-body  ">				
+					<div class="form-group">
+						<label>Title:</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+					<div class="form-group">
+						<label>Author:</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+	                <div class="form-group">
+						<label>ISBN:</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+					
+
+                    <div class="form-group">
+						<label>Publisher:</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+					<div class="form-group">
+						<label>Description:</label>
+						<textarea rows="5" input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" ></textarea>
+					</div>
+				</div>
+				<div class="modal-footer justify-content-center my-0 ">
+					
+		
+					<input type="submit" class="btn btn-dark bg-dark"   value="Save" style="width:100%;border:1px solid black;color:white">
+				</div>
+			</form>
+			</div>
+
+	
+
+     </div>
 
 
-<div class="logincontainer browsecontainer mt-3 d-flex px-3 pb-3 " style="width:99.3%;">
-<!-- Nav tabs -->
-<div class="resultsection mt-2 d-flex align-items-center  w-100">
-<h5 class="resulttext" > Search Result: </h5>
-<h5 class="resultfor mx-2 px-2 py-1" >
-Harry Potter
-</h5>
+<div id="menu1" class="container tab-pane fade mt-3 "  >
+	
+
+
+	</div>
 
 
 
-
-</div>
-<div id="target-content" class="productsitemlist   mt-2 mx-0 mx-md-0" style="" >
-
-
-<div class="card  my-3 productcard " onclick="location.href='Openproducts.html';" >
-<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2" >
-<div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimg" >
-	<img class="cardimg " src="assets/harry.jpg" alt="Book image" style="height:100%;min-width:0;" >
-</div>
-<div class="card-body p-0 d-flex productcardbody" >
-<div class="col pr-0"> 
-<h4 class="card-title itemname my-0  w-100 ">Harry Potter and the Philosopher's Stone</h4>
-<p class="card-text itemprice my-0 my-1 ">-JK Rowling</p> 
-<p class="card-text itemdescription my-1  w-100">Adaptation of the first of J.K. Rowling's popular children's novels about Harry Potter, a boy who learns on his eleventh birthday that he is the orphaned son of two powerful wizards and possesses unique magical powers of his own. He is summoned from his life as an unwanted child to become a student at Hogwarts, an English boarding school for wizards. There, he meets several friends who become his closest allies and help him discover the truth about his parents' mysterious deaths.</p>
-</div>
-</div>
-</div>
 </div>
 
-<div class="card  my-3 productcard " onclick="location.href='Openproducts.html';" >
-<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2" >
-<div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimg" >
-	<img class="cardimg " src="assets/chocolatebar.png" alt="Card image" style="height:100%;min-width:0;" >
-</div>
-<div class="card-body p-0 d-flex productcardbody" >
-<div class="col pr-0"> 
-<h4 class="card-title itemname my-0  w-100 ">Almond Chocolatebar</h4>
-<p class="card-text itemprice my-0 my-1 ">$ 35.55</p> 
-<p class="card-text itemdescription my-1  w-100">Combination of sweet and apple ,a sweet and apple flavour is nice Combination of sweet and apple ,a sweet and apple flavour is niceCombination of sweet and apple ,a sweet and apple flavour is niceCombination of sweet and apple ,a sweet and apple flavour is niceCombination of sweet and apple ,a sweet and apple flavour is nice</p>
-</div>
-</div>
-</div>
-</div>
+<!-- 		<form action="confirmation.php" method="post" autocomplete="false" autocomplete="off"  >
+				<div class="modal-header align-items-center justify-content-center">				
+					<h4 class="modal-title">Advanced Search</h4>
+		
+				</div>
+				<div class="modal-body">				
+					<div class="form-group">
+						<label>Title:</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+					<div class="form-group">
+						<label>Author:</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+	                <div class="form-group">
+						<label>ISBN:</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+					
 
-<div class="card  my-3 productcard " onclick="location.href='Openproducts.html';" >
-<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2" >
-<div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimg" >
-	<img class="cardimg " src="assets/lollipop.png" alt="Card image" style="height:100%;min-width:0;" >
-</div>
-<div class="card-body p-0 d-flex productcardbody" >
-<div class="col pr-0"> 
-<h4 class="card-title itemname my-0  w-100 ">Blue Lollipop</h4>
-<p class="card-text itemprice my-0 my-1 ">$ 15.25</p> 
-<p class="card-text itemdescription my-1  w-100">Combination of sweet and apple ,a sweet and apple flavour is nice Combination of sweet and apple ,a sweet and apple flavour is niceCombination of sweet and apple ,a sweet and apple flavour is niceCombination of sweet and apple ,a sweet and apple flavour is niceCombination of sweet and apple ,a sweet and apple flavour is nice</p>
-</div>
-</div>
-</div>
-</div>
+                    <div class="form-group">
+						<label>Publisher:</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+					<div class="form-group">
+						<label>Keyword:</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+				</div>
+				<div class="modal-footer justify-content-center">
+					
+		
+					<input type="submit" class="btn btn-light"   value="Search" style="background-color:white !important;color:black;width:50%;box-shadow:0px 1px 1px 0px black;">
+				</div>
+			</form> -->
+		
 
-<div class="card  my-3 productcard " onclick="location.href='Openproducts.html';" >
-<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2" >
-<div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimg" >
-	<img class="cardimg " src="assets/cake.png" alt="Card image" style="height:100%;min-width:0;" >
-</div>
-<div class="card-body p-0 d-flex productcardbody" >
-<div class="col pr-0"> 
-<h4 class="card-title itemname my-0  w-100 ">Chocolate Vanilla Cake</h4>
-<p class="card-text itemprice my-0 my-1 ">$ 105.25</p> 
-<p class="card-text itemdescription my-1  w-100">Combination of sweet and apple ,a sweet and apple flavour is nice Combination of sweet and apple ,a sweet and apple flavour is niceCombination of sweet and apple ,a sweet and apple flavour is niceCombination of sweet and apple ,a sweet and apple flavour is niceCombination of sweet and apple ,a sweet and apple flavour is nice</p>
-</div>
-</div>
-</div>
-</div>
-
-
-<div class="d-flex flex-row pagination mt-2 text-dark">
-<a class="page mx-1 px-3 py-1 ">1</a>
-<a class="page mx-1 px-3 py-1 ">2</a>
-<a class="page mx-1 px-3 py-1 ">3</a>
-<a class="page mx-1 px-3 py-1 ">4</a>
-</div>
-
-</div>
 
 
 </div>
