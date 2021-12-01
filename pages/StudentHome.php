@@ -1,11 +1,11 @@
 <?php
 
 session_start();
-if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
+if ($_SESSION['firstname'] && $_SESSION['lastname']) {
   $firstname = $_SESSION['firstname'];
   $lastname = $_SESSION['lastname'];
 } else {
-  header('Location: ../index.html');
+  header('Location: ../index.php?login=false');
 }
 
 ?>
@@ -28,11 +28,11 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
-  <link rel="stylesheet" href="assets/owlcarousel/assets/owl.carousel.min.css">
-  <link rel="stylesheet" href="assets/owlcarousel/assets/owl.theme.default.min.css">
+  <link rel="stylesheet" href="../assets/owlcarousel/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="../assets/owlcarousel/assets/owl.theme.default.min.css">
 
-  <script src="assets/owlcarousel/owl.carousel.js"></script>
-  <link rel="stylesheet" href="assets/css/animate.css" />
+  <script src="../assets/owlcarousel/owl.carousel.js"></script>
+  <link rel="stylesheet" href="../assets/css/animate.css" />
   <script src="../scripts/CETproj.js"></script>
 
 
@@ -62,7 +62,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
           </button>
           <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="CETproj.html"
             style="width:100%;">
-            <img class="d-flex justify-content-center " src="assets/images/puplogo.png" alt="Logo" style="height:38px;">
+            <img class="d-flex justify-content-center " src="../assets/images/puplogo.png" alt="Logo" style="height:38px;">
           </a>
         </div>
 
@@ -71,7 +71,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
           <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar">
             <ul class="navbar-nav ">
               <li class="nav-item ">
-                <a class="nav-link" style="color:white;text-decoration:none;" href="CETproj.html">Welcome <?php "$firstname $lastname" ?></a>
+                <a class="nav-link" style="color:white;text-decoration:none;" href="CETproj.html">Welcome <?php echo "$firstname $lastname" ?></a>
               </li>
 
 
@@ -120,7 +120,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
 
         <div class="logo d-flex align-items-center justify-content-center mb-3 w-100 bg-dark">
           <div class="logobox d-flex align-items-center justify-content-center w-100 bg-dark  px-4 py-4">
-            <img class="logoimg " src="assets/images/puplogo.png" alt="Card image">
+            <img class="logoimg " src="../assets/images/puplogo.png" alt="Card image">
           </div>
           <div class="logoname d-flex align-items-center justify-content-center mb-4 w-100 bg-dark text-light">
 
@@ -130,7 +130,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
 
         </div>
         <ul class="homebuttons" style="padding: 0;list-style-type: none;">
-          <a href="../index.html">
+          <a href="../index.php?firstname=<?php echo $firstname ?>&lastname=<?php echo $lastname?>">
             <li class="homebutton  d-flex align-items-center mt-2  w-100 ">
               <i class="fas fa-home h-10 mr-2 align-items-center "></i>
               <h5 class=" buttontext align-items-center mt-2 justify-content-center">Home</h5>
@@ -145,7 +145,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
           <a href="Login Page.php">
             <li class="homebutton d-flex align-items-center mt-2 w-100 ">
               <i class="fas fa-sign-in-alt mr-2 align-items-center  "></i>
-              <h5 class="buttontext align-items-center mt-2 justify-content-center">Login</h5>
+              <h5 class="buttontext align-items-center mt-2 justify-content-center">Logout</h5>
             </li>
           </a>
         </ul>
@@ -191,7 +191,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
 
                 <div class="bookimagehome  px-2 pt-2">
                   <div class="bookimagebox d-flex align-items-center justify-content-center h-100  ">
-                    <img class="bookimg " src="assets/harry.jpg" alt="Card image">
+                    <img class="bookimg " src="../assets/harry.jpg" alt="Card image">
                   </div>
 
 
@@ -214,7 +214,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
               <div class=" p-1 w-100" onclick="location.href='Openproducts.html';">
                 <div class="card newitems w-100 py-1 px-1">
                   <div class="card-img-top d-flex mx-auto w-100 align-items-center justify-content-center">
-                    <img class="cardimg " src="assets/harry.jpg" alt="Card image">
+                    <img class="cardimg " src="../assets/harry.jpg" alt="Card image">
                   </div>
                   <div class="card-body pt-1 pb-0 px-0 ">
                     <p class="card-title newitemname mb-0">Harry Potter and the Philosopher's Stone</p>
@@ -226,7 +226,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
               <div class="p-1 " onclick="location.href='Openproducts.html';">
                 <div class="card newitems w-100 py-1 px-1">
                   <div class="card-img-top d-flex mx-auto w-100 align-items-center justify-content-center">
-                    <img class="cardimg " src="assets/harry.jpg" alt="Card image">
+                    <img class="cardimg " src="../assets/harry.jpg" alt="Card image">
                   </div>
                   <div class="card-body pt-1 pb-0 px-0 ">
                     <p class="card-title newitemname mb-0">Harry Potter and the Philosopher's Stone</p>
@@ -238,7 +238,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
               <div class=" p-1 " onclick="location.href='Openproducts.html';">
                 <div class="card newitems w-100 py-1 px-1">
                   <div class="card-img-top d-flex mx-auto w-100 align-items-center justify-content-center">
-                    <img class="cardimg " src="assets/harry.jpg" alt="Card image">
+                    <img class="cardimg " src="../assets/harry.jpg" alt="Card image">
                   </div>
                   <div class="card-body pt-1 pb-0 px-0 ">
                     <p class="card-title newitemname mb-0">Harry Potter and the Philosopher's Stone</p>
@@ -250,7 +250,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
               <div class=" p-1 " onclick="location.href='Openproducts.html';">
                 <div class="card newitems w-100 py-1 px-1">
                   <div class="card-img-top d-flex mx-auto w-100 align-items-center justify-content-center">
-                    <img class="cardimg " src="assets/harry.jpg" alt="Card image">
+                    <img class="cardimg " src="../assets/harry.jpg" alt="Card image">
                   </div>
                   <div class="card-body pt-1 pb-0 px-0 ">
                     <p class="card-title newitemname mb-0">Harry Potter and the Philosopher's Stone</p>
@@ -262,7 +262,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
               <div class="p-1 " onclick="location.href='Openproducts.html';">
                 <div class="card newitems w-100 py-1 px-1">
                   <div class="card-img-top d-flex mx-auto w-100 align-items-center justify-content-center">
-                    <img class="cardimg " src="assets/harry.jpg" alt="Card image">
+                    <img class="cardimg " src="../assets/harry.jpg" alt="Card image">
                   </div>
                   <div class="card-body pt-1 pb-0 px-0 ">
                     <p class="card-title newitemname mb-0">Harry Potter and the Philosopher's Stone</p>
@@ -274,7 +274,7 @@ if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
               <div class="p-1 " onclick="location.href='Openproducts.html';">
                 <div class="card newitems w-100 py-1 px-1">
                   <div class="card-img-top d-flex mx-auto w-100 align-items-center justify-content-center">
-                    <img class="cardimg " src="assets/harry.jpg" alt="Card image">
+                    <img class="cardimg " src="../assets/harry.jpg" alt="Card image">
                   </div>
                   <div class="card-body pt-1 pb-0 px-0 ">
                     <p class="card-title newitemname mb-0">Harry Potter and the Philosopher's Stone</p>

@@ -1,3 +1,9 @@
+<?php
+	include("../includes/db.inc.php");
+	session_start();
+	unset($_SESSION['firstname']);
+	unset($_SESSION['lastname']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,11 +24,11 @@
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
-	<link rel="stylesheet" href="assets/owlcarousel/assets/owl.carousel.min.css">
-	<link rel="stylesheet" href="assets/owlcarousel/assets/owl.theme.default.min.css">
-	<script src="assets/vendors/jquery.min.js"></script>
-	<script src="assets/owlcarousel/owl.carousel.js"></script>
-	<link rel="stylesheet" href="assets/css/animate.css" />
+	<link rel="stylesheet" href="../assets/owlcarousel/assets/owl.carousel.min.css">
+	<link rel="stylesheet" href="../assets/owlcarousel/assets/owl.theme.default.min.css">
+	<script src="../assets/vendors/jquery.min.js"></script>
+	<script src="../assets/owlcarousel/owl.carousel.js"></script>
+	<link rel="stylesheet" href="../assets/css/animate.css" />
 
 	<script src="../scripts/CETproj.js"></script>
 
@@ -57,7 +63,7 @@
 					</button>
 					<a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block"
 						href="CETproj.html" style="width:100%;">
-						<img class="d-flex justify-content-center " src="assets/images/puplogo.png" alt="Logo"
+						<img class="d-flex justify-content-center " src="../assets/images/puplogo.png" alt="Logo"
 							style="height:38px;">
 					</a>
 				</div>
@@ -116,7 +122,7 @@
 
 				<div class="logo d-flex align-items-center justify-content-center mb-3 w-100 bg-dark">
 					<div class="logobox d-flex align-items-center justify-content-center w-100 bg-dark  px-4 py-4">
-						<img class="logoimg " src="assets/images/puplogo.png" alt="Card image">
+						<img class="logoimg " src="../assets/images/puplogo.png" alt="Card image">
 					</div>
 					<div
 						class="logoname d-flex align-items-center justify-content-center mb-4 w-100 bg-dark text-light">
@@ -127,7 +133,7 @@
 
 				</div>
 				<ul class="homebuttons" style="padding: 0;list-style-type: none;">
-					<a href="../">
+					<a href="../index.php">
 						<li class="homebutton  d-flex align-items-center mt-2  w-100 ">
 							<i class="fas fa-home h-10 mr-2 align-items-center "></i>
 							<h5 class=" buttontext align-items-center mt-2 justify-content-center">Home</h5>
@@ -139,7 +145,7 @@
 							<h5 class="buttontext align-items-center mt-2 justify-content-center">Browse</h5>
 						</li>
 					</a>
-					<a href="Login Page.html">
+					<a href="Login Page.php">
 						<li class="homebutton d-flex align-items-center mt-2 w-100 ">
 							<i class="fas fa-sign-in-alt mr-2 align-items-center  "></i>
 							<h5 class="buttontext align-items-center mt-2 justify-content-center">Login</h5>
@@ -160,25 +166,43 @@
 
 						<div class="container" id="container">
 							<div class="form-container sign-up-container">
-								<form action="../scripts/auth.php">
+								<form action="../scripts/auth.php?type=admin" method="post">
 									<h1 class="mb-4">Sign in as Admin</h1>
 
 
 
-									<input type="email" placeholder="Email"/>
-									<input type="password" placeholder="Password" />
+									<input type="email" placeholder="Email" name="email"/>
+									<input type="password" placeholder="Password" name="password"/>
 									<button class="mt-3">Sign In</button>
+									<?php
+										if(isset($_GET['error']) && $_GET['type'] == 'admin') {
+											switch($_GET['error']) {
+												case 401:
+													echo '<p style="color: red">You entered a wrong email/password</p>';
+													break;													
+											}
+										}
+									?>		
 								</form>
 							</div>
 							<div class="form-container sign-in-container">
-								<form action="../scripts/auth.php" method="post">
+								<form action="../scripts/auth.php?type=student" method="post">
 									<h1 class="mb-4">Sign in as Student</h1>
 
 
 									<input type="email" placeholder="Email" name="email"/>
 									<input type="password" placeholder="Password" name="password"/>
 
-									<input type="submit" value="Sign In" class="mt-3">									
+									<button class="mt-3">Sign In</button>		
+									<?php
+										if(isset($_GET['error']) && $_GET['type'] == 'student') {
+											switch($_GET['error']) {
+												case 401:
+													echo '<p style="color: red">You entered a wrong email/password</p>';
+													break;													
+											}
+										}
+									?>					
 								</form>
 							</div>
 							<div class="overlay-container">

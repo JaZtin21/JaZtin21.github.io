@@ -1,31 +1,39 @@
 <?php
 include('../includes/db.inc.php');
-session_start();
 $email = '';
 $password = '';
-if(isset($_POST['email']) && isset($_POST['password'])) {
+$login_type = '';
+
+if (isset($_GET['type']) && isset($_POST['email']) && isset($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $login_type = $_GET['type'];
 }
 
-$query = "SELECT * FROM user.accounts WHERE email = '$email' and password = '$password';";
+$query = "SELECT * FROM user.accounts WHERE email = ? AND type= ?;";
 
-$sess = mysqli_query($conn, $query);
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "ss", $email, $login_type);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-$current_user = mysqli_fetch_assoc($sess) or die("Error code: User not found!");
+$current_user = mysqli_fetch_assoc($result);
 
-mysqli_close($conn);
-
-$_SESSION['firstname'] = $current_user['firstname'];
-$_SESSION['lastname'] = $current_user['lastname'];
-
-if ($current_user['type'] == 'admin') {
-    header('Location: ../pages/AdminHome.php');
-} else if ($current_user['type'] == 'student') {
-    header('Location: ../pages/StudentHome.php');
+if (!password_verify($password, $current_user['password'])) {
+    //Wrong credentials   
+    header("Location: ../pages/Login Page.php?error=401&type=$login_type");
 } else {
-    die('404: File not Found!');
+    //Login successful. Creates session of the user.
+    session_start();
+    $_SESSION['firstname'] = $current_user['firstname'];
+    $_SESSION['lastname'] = $current_user['lastname'];
+    $_SESSION['logintype'] = $current_user['type'];
+
+    if ($current_user['type'] == 'admin') {
+        header('Location: ../pages/AdminHome.php');
+    } else if ($current_user['type'] == 'student') {
+        header('Location: ../pages/StudentHome.php');
+    } else {
+        die('404: File not Found!');
+    }
 }
-
-?>
-
