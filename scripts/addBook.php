@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 }
 
 //Check if book is already existing in the database
-$query = "SELECT * FROM user.books WHERE book_name = ? AND book_author = ?;";
+$query = "SELECT * FROM books.books_dummy WHERE book_name = ? AND book_author = ?;";
 
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "ss", $title, $author);
@@ -27,7 +27,7 @@ $books = mysqli_fetch_assoc($result);
 
 if (is_null($books)) {
     //Add/Insert book into the database
-    $query = "INSERT INTO user.books (book_name, book_author, isbn, book_publisher, description, image_url) VALUES(?, ?, ?, ?, ?, ?);";
+    $query = "INSERT INTO books.books_dummy (book_name, book_author, isbn, book_publisher, description, image_url) VALUES(?, ?, ?, ?, ?, ?);";
 
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "ssssss", $title, $author, $isbn, $publisher, $description, $image_url);

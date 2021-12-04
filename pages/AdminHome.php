@@ -8,7 +8,7 @@ if ($_SESSION['firstname'] && $_SESSION['lastname']) {
   header('Location: ../index.php?login=false');
 }
 
-$query = "SELECT * FROM user.books ORDER BY date_of_addition DESC LIMIT 5;";
+$query = "SELECT * FROM books.books_dummy ORDER BY date_of_addition DESC LIMIT 5;";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);

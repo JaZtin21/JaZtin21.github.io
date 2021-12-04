@@ -10,7 +10,7 @@ if (isset($_GET['type']) && isset($_POST['email']) && isset($_POST['password']))
     $login_type = $_GET['type'];
 }
 
-$query = "SELECT * FROM user.accounts WHERE email = ? AND type= ?;";
+$query = "SELECT * FROM books.accounts WHERE email = ? AND type= ?;";
 
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "ss", $email, $login_type);

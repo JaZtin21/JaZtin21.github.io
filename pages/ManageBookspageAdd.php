@@ -186,7 +186,7 @@ if(isset($_GET['error'])) {
 									<div class="modal-header bookimageinput align-items-center justify-content-center py-2  d-flex ">
 										<div class="bookimageaddbook  px-2 pt-2">
 											<div class="bookimagebox d-flex align-items-center justify-content-center h-100  ">
-												<img class="bookimg " src="../assets/harry.jpg" alt="Card image">
+												<img class="bookimg " src="" alt="Card image">
 
 											</div>
 
