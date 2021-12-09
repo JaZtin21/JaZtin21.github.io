@@ -9,8 +9,8 @@
   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
   crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet"  href="CETproj.css" />
-     <script src="CETproj.js"></script>
+  <link rel="stylesheet"  href="styles/CETproj.css" />
+     <script src="scripts/CETproj.js"></script>
  
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
@@ -23,7 +23,7 @@
 
   <script src="assets/owlcarousel/owl.carousel.js"></script>
   <link rel="stylesheet"  href="assets/css/animate.css" />
-  <script src="CETproj.js"></script>
+  <script src="scripts/CETproj.js"></script>
 
 
 <style>
