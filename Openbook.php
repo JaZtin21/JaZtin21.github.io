@@ -1,36 +1,31 @@
+<?php
+include('database.php');
+
+	session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Products</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script type="text/javascript" 
-  src="https://code.jquery.com/jquery-3.6.0.js"
-  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet"  href="styles/CETproj.css" />
-     <script src="scripts/CETproj.js"></script>
- 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
   <link rel="stylesheet" href="assets/owlcarousel/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="assets/owlcarousel/assets/owl.theme.default.min.css">
-
   <script src="assets/owlcarousel/owl.carousel.js"></script>
-  <link rel="stylesheet"  href="assets/css/animate.css" />
-  <script src="scripts/CETproj.js"></script>
-
-
-<style>
-
-
-
-</style>
+  
+  <script src="./scripts/CETproj.js"></script>
+  <link rel="stylesheet" href="./styles/CETproj.css" />
 
 </head>
 
@@ -56,7 +51,20 @@
 <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar"   >
     <ul class="navbar-nav "  >
       <li class="nav-item ">
-        <a class="nav-link"  style="color:white;text-decoration:none;" href="CETproj.html">Welcome Visitor!</a>
+        <a class="nav-link"  style="color:white;text-decoration:none;" href="CETproj.html">Welcome <?php 
+		
+if (isset($_SESSION['logintype'])){
+   
+   if ($_SESSION['firstname'] && $_SESSION['lastname']) {
+  $firstname = $_SESSION['firstname'];
+  $lastname = $_SESSION['lastname']; 
+  echo "$firstname $lastname";  
+}?>	
+<?php       
+	 }else  {
+		 echo ("Visitor");   
+}
+?></a>
       </li>
 
 
@@ -67,8 +75,30 @@
 
 <div class="collapse navbar-collapse ml-1   " id="collapsibleNavbar"  >
 <div class=" d-flex ml-auto " style="">
- <span class="navline my-1 " ></span>
     <ul class="navbar-nav "  >
+<?php
+if (isset($_SESSION['logintype'])){
+    if ($_SESSION['logintype'] === 'admin') {?>
+
+	  <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php">Manage Books</a>
+      </li>	
+	   <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Manage Transactions</a>
+      </li>	 
+
+<?php       
+    }else if ($_SESSION['logintype'] === 'student') {
+?>
+	   <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
+      </li>	  
+<?php       
+    }
+}
+?>
+ <span class="navline my-1 " ></span>
+
       <li class="nav-item bg-sm-dark">
         <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Other Resources</a>
       </li>	  
@@ -121,11 +151,31 @@
 <i class="fas fa-search mr-2 align-items-center  "></i><h5 class="buttontext align-items-center mt-2 justify-content-center" >Browse</h5>
 </li>
 </a>
+<?php
+if (isset($_SESSION['logintype'])){
+    if ($_SESSION['logintype'] === 'admin' || $_SESSION['logintype'] === 'student' ) {?>
+	
+<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none d-flex' href ='logout.php'>"; ?>
+<li class="homebutton d-flex align-items-center mt-2 w-100 ">
+
+<i class="fas fa-sign-in-alt mr-2 align-items-center  "></i><h5 class="buttontext align-items-center mt-2 justify-content-center" >Logout</h5>
+</li>
+</a>
+
+
+<?php       
+	} }else  {
+?>
+
 <?php echo "<a class='bookdescriptioncontainerhome text-decoration-none d-flex' href ='LoginPage.php'>"; ?>
 <li class="homebutton d-flex align-items-center mt-2 w-100 ">
 <i class="fas fa-sign-in-alt mr-2 align-items-center  "></i><h5 class="buttontext align-items-center mt-2 justify-content-center" >Login</h5>
 </li>
 </a>
+
+<?php       
+}
+?>
 </ul>
 
 </div>
@@ -165,7 +215,7 @@ while($row = mysqli_fetch_assoc($bookselect)) {
 <div class="bookimagehome  px-2 pt-2">
 <div class="bookimagebox d-flex align-items-center justify-content-center h-100  ">
 <?php
-echo '<img class="bookimg text-center "  alt="No Image Preview" src="data:image/jpeg;base64,'.base64_encode( $row['image'] ).'"/>';
+echo '<img class="bookimg text-center "  alt="No Image Preview" src="'.$row['image'] .'"/>';
 ?>
 </div>
 

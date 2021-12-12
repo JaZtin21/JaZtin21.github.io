@@ -1,8 +1,14 @@
 <?php
 include("database.php");
 session_start();
-$firstname = $_SESSION['firstname'];
-$lastname = $_SESSION['lastname'];
+
+if ($_SESSION['firstname'] && $_SESSION['lastname']) {
+  $firstname = $_SESSION['firstname'];
+  $lastname = $_SESSION['lastname'];
+} else {
+  header('Location: LoginPage.php?login=false');
+}
+
 $book_added = '';
 $error_type = '';
 if(isset($_GET['success'])) {
@@ -17,41 +23,26 @@ if(isset($_GET['error'])) {
 
 <!DOCTYPE html>
 <html lang="en" >
+
 <head>
   <title>Products</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet"  href="styles/CETproj.css" />
-     <script src="scripts/CETproj.js"></script>
- 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
   <link rel="stylesheet" href="assets/owlcarousel/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="assets/owlcarousel/assets/owl.theme.default.min.css">
-  <script src="assets/vendors/jquery.min.js"></script>
   <script src="assets/owlcarousel/owl.carousel.js"></script>
-  <link rel="stylesheet"  href="assets/css/animate.css" />
-
-        <script src="scripts/CETproj.js"></script>
-
-
-<style>
-html {
-  height: 100%;
-}
-body {
-  height: calc(100% - 32px);
-}
-
-
-</style>
+  
+  <script src="./scripts/CETproj.js"></script>
+  <link rel="stylesheet" href="./styles/CETproj.css" />
 
 </head>
 
@@ -139,7 +130,7 @@ body {
 
 </div>
 <ul class="homebuttons" style="padding: 0;list-style-type: none;">
-<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='AdminHome.php'>"; ?>
+<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='LibraryHome.php'>"; ?>
 <li class="homebutton  d-flex align-items-center mt-2  w-100 " >
 <i class="fas fa-home h-10 mr-2 align-items-center "></i><h5 class=" buttontext align-items-center mt-2 justify-content-center" >Home</h5>
 </li>
@@ -185,7 +176,7 @@ body {
 	<div class="d-flex addbookform justify-content-center px-0 mx-0 mt-3">
       		<form class="" action="addBook.php" method="post" autocomplete="false" autocomplete="off" enctype="multipart/form-data">
 				<div class="modal-header bookimageinput align-items-center justify-content-center py-2  d-flex ">				
-					<div class="bookimageaddbook  px-2 pt-2">
+					<div class="bookimageaddbook  px-1 py-1">
                     <div class="bookimagebox d-flex align-items-center justify-content-center h-100  ">
                     <img class="bookimg " src="assets/harry.jpg" alt="Card image"  >
 				    

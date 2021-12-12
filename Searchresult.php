@@ -1,29 +1,31 @@
+<?php
+include('database.php');
+
+	session_start();
+
+?>
+
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <title>Products</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet"  href="styles/CETproj.css" />
-     <script src="scripts/CETproj.js"></script>
- 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
   <link rel="stylesheet" href="assets/owlcarousel/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="assets/owlcarousel/assets/owl.theme.default.min.css">
-  <script src="assets/vendors/jquery.min.js"></script>
   <script src="assets/owlcarousel/owl.carousel.js"></script>
-
-
-
-
+  
+  <script src="./scripts/CETproj.js"></script>
+  <link rel="stylesheet" href="./styles/CETproj.css" />
 
 </head>
 
@@ -49,8 +51,22 @@
 <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar"   >
     <ul class="navbar-nav "  >
       <li class="nav-item ">
-        <a class="nav-link"  style="color:white;text-decoration:none;" href="CETproj.html">Welcome Visitor!</a>
-      </li>
+        <a class="nav-link"  style="color:white;text-decoration:none;" href="CETproj.html">Welcome 
+<?php 
+		
+if (isset($_SESSION['logintype'])){
+   
+   if ($_SESSION['firstname'] && $_SESSION['lastname']) {
+  $firstname = $_SESSION['firstname'];
+  $lastname = $_SESSION['lastname']; 
+  echo "$firstname $lastname";  
+}?>	
+<?php       
+	 }else  {
+		 echo ("Visitor");   
+}
+?></a>
+     </li>
 
 
 
@@ -60,10 +76,31 @@
 
 <div class="collapse navbar-collapse ml-1   " id="collapsibleNavbar"  >
 <div class=" d-flex ml-auto " style="">
+    <ul class="navbar-nav "  >
+		<?php
+if (isset($_SESSION['logintype'])){
+    if ($_SESSION['logintype'] === 'admin') {?>
 
+	  <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php">Manage Books</a>
+      </li>	
+	   <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Manage Transactions</a>
+      </li>	 
+
+<?php       
+    }else if ($_SESSION['logintype'] === 'student') {
+?>
+	   <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
+      </li>	  
+<?php       
+    }
+}
+?>
  <span class="navline my-1 " ></span>
 
-    <ul class="navbar-nav "  >
+
 	
       <li class="nav-item bg-sm-dark">
         <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Other Resources</a>
@@ -117,11 +154,31 @@
 <i class="fas fa-search mr-2 align-items-center  "></i><h5 class="buttontext align-items-center mt-2 justify-content-center" >Browse</h5>
 </li>
 </a>
+<?php
+if (isset($_SESSION['logintype'])){
+    if ($_SESSION['logintype'] === 'admin' || $_SESSION['logintype'] === 'student' ) {?>
+	
+<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none d-flex' href ='logout.php'>"; ?>
+<li class="homebutton d-flex align-items-center mt-2 w-100 ">
+
+<i class="fas fa-sign-in-alt mr-2 align-items-center  "></i><h5 class="buttontext align-items-center mt-2 justify-content-center" >Logout</h5>
+</li>
+</a>
+
+
+<?php       
+	} }else  {
+?>
+
 <?php echo "<a class='bookdescriptioncontainerhome text-decoration-none d-flex' href ='LoginPage.php'>"; ?>
 <li class="homebutton d-flex align-items-center mt-2 w-100 ">
 <i class="fas fa-sign-in-alt mr-2 align-items-center  "></i><h5 class="buttontext align-items-center mt-2 justify-content-center" >Login</h5>
 </li>
 </a>
+
+<?php       
+}
+?>
 </ul>
 
 </div>
@@ -133,7 +190,7 @@
 <form class="input-group ml-2 d-inline-flex" action="search.php" method="GET" >
 
 <i class="fas fa-search mr-2 align-items-center  my-auto"></i>
-<input type="text" class="form-control my-auto" name="searchtext" placeholder="Search " style="border:0;height:30px;padding-left:2px; outline:none;box-shadow:none;">
+<input type="text" class="form-control my-auto" name="subsubject" placeholder="Search " style="border:0;height:30px;padding-left:2px; outline:none;box-shadow:none;">
 <div class="input-group-append">
       <button class="btn " type="submit" style="box-shadow:none;outline:none;">
         <i class="fa fa-arrow-right"></i>
@@ -162,7 +219,130 @@ $bookselect = mysqli_query($conn, $sql);
 
 
 
+
 ?>
+<?php
+	/*
+		Place code to connect to your DB here.
+	*/
+	
+	// How many adjacent pages should be shown on each side?
+	$adjacents = 1;
+
+	
+	/* 
+	   First get total number of rows in data table. 
+	   If you have a WHERE clause in your query, make sure you mirror it here.
+	*/
+$result_db = mysqli_query($conn,"SELECT COUNT(*) FROM books where subsubject= '" . $subsubject . "'"); 
+$row_db = mysqli_fetch_row($result_db);  
+$total_pages = $row_db[0];  
+
+	
+	/* Setup vars for query. */
+	$limit = 5; 								//how many items to show per page
+	if($page) 
+		$start = ($page - 1) * $limit; 			//first item to display on this page
+	else
+		$start = 0;								//if no page var is given, set start to 0
+	
+	/* Get data. */
+
+	
+	/* Setup page vars for display. */
+	if ($page == 0) $page = 1;					//if no page var is given, default to 1.
+	$prev = $page - 1;							//previous page is page - 1
+	$next = $page + 1;							//next page is page + 1
+	$lastpage = ceil($total_pages/$limit);		//lastpage is = total pages / items per page, rounded up.
+	$lpm1 = $lastpage - 1;						//last page minus 1
+	
+	
+	
+	/* 
+		Now we apply our rules and draw the pagination object. 
+		We're actually saving the code to a variable in case we want to draw it more than once.
+	*/
+	$pagination = "";
+	
+	if($lastpage > 1)
+	{	
+		$pagination .= "<div class=\"pagination\">";
+		//previous button
+		if ($page > 1) 
+			$pagination.= "<a class=' page mr-1 px-2 pb-1' href='Searchresult.php?subsubject=".$subsubject."&page=".$prev."'>«</a>";
+		else
+			$pagination.= "<span class=\"disabled pb-1 d-none\">« previous</span>";	
+		
+		
+		//pages	
+		if ($lastpage < 7 + ($adjacents * 2))	//not enough pages to bother breaking it up
+		{	
+			for ($counter = 1; $counter <= $lastpage; $counter++)
+			{
+				if ($counter == $page)
+					$pagination.= "<span class=\"activepage-items mx-1 px-2 \">$counter</span>";
+				else
+					$pagination.= "<a class='  page mx-1 px-2' href='Searchresult.php?subsubject=".$subsubject."&page=".$counter."'>$counter</a>";					
+			}
+		}
+		elseif($lastpage > 5 + ($adjacents * 2))	//enough pages to hide some
+		{
+			//close to beginning; only hide later pages
+			if($page < 1 + ($adjacents * 2))		
+			{
+				for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++)
+				{
+					if ($counter == $page)
+						$pagination.= "<span class=\"activepage-items mr-1 px-2 \">$counter</span>";
+					else
+						$pagination.= "<a class='  page mr-1 px-2' href='Searchresult.php?subsubject=".$subsubject."&page=".$counter."'>$counter</a>";					
+				}
+				$pagination.= "<span class=\"mr-1 \">...</span>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Searchresult.php?subsubject=".$subsubject."&page=".$lpm1."' >$lpm1</a>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Searchresult.php?subsubject=".$subsubject."&page=".$lastpage."' >$lastpage</a>";		
+			}
+			//in middle; hide some front and some back
+			elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
+			{
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Searchresult.php?subsubject=".$subsubject."&page=1' >1</a>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Searchresult.php?subsubject=".$subsubject."&page=2' >2</a>";
+				$pagination.= "<span class=\"mr-1 \">...</span>";
+				for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++)
+				{
+					if ($counter == $page)
+						$pagination.= "<span class=\"activepage-items mr-1 px-2 \">$counter</span>";
+					else
+						$pagination.= "<a class='  page mr-1 px-2 ' href='Searchresult.php?subsubject=".$subsubject."&page=".$counter."' >$counter</a>";					
+				}
+				$pagination.= "<span class=\"mr-1 \">...</span>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Searchresult.php?subsubject=".$subsubject."&page=".$lpm1."' >$lpm1</a>";
+				$pagination.= "<a class='   page mr-1 px-2 ' href='Searchresult.php?subsubject=".$subsubject."&page=".$lastpage."' >$lastpage</a>";		
+			}
+			//close to end; only hide early pages
+			else
+			{
+				$pagination.= "<a class='  page mr-1 px-2' href='Searchresult.php?subsubject=".$subsubject."&page=1' >1</a>";
+				$pagination.= "<a class='   page mr-1 px-2' href='Searchresult.php?subsubject=".$subsubject."&page=2'>2</a>";
+				$pagination.= "<span class=\"mr-1 \">...</span>";
+				for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++)
+				{
+					if ($counter == $page)
+						$pagination.= "<span class=\"activepage-items mr-1 px-2 \">$counter</span>";
+					else
+						$pagination.= "<a class='   page mr-1 px-2 ' href='Searchresult.php?subsubject=".$subsubject."&page=".$counter."'>$counter</a>";					
+				}
+			}
+		}
+		
+		//next button
+		if ($page < $counter - 1) 
+			$pagination.= "<a class='   page mr-1 px-2 pb-1' href='Searchresult.php?subsubject=".$subsubject."&page=".$next."' >»</a>";
+		else
+			$pagination.= "<span class=\"disabled d-none \">next »</span>";
+		$pagination.= "</div>\n";		
+	}
+?>
+
 
 <div class="logincontainer browsecontainer d-flex px-3 pb-3 " style="width:99.3%;margin-top:64px;">
 <!-- Nav tabs -->
@@ -183,7 +363,7 @@ $bookselect = mysqli_query($conn, $sql);
 	<?php echo "<a class='card  my-3 productcard d-block text-decoration-none ' href ='Openbook.php?id=".$row["id"]."'>"; ?>
 	<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2" >
 	<div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimg" >
-	<?php echo '<img class="cardimg text-dark"  alt="No Image Preview " src="data:image/jpeg;base64,'.base64_encode( $row['image'] ).'"/>';  ?>
+	<?php echo '<img class="cardimg text-dark"  alt="No Image Preview " src="'.$row['image'] .'"/>';  ?>
 
 	</div>
     <div class="card-body p-0 d-flex productcardbody" >
@@ -201,26 +381,7 @@ $bookselect = mysqli_query($conn, $sql);
     }
 
 ?>
-<?php  
-
-$result_db = mysqli_query($conn,"SELECT COUNT(*) FROM books where subsubject= '" . $subsubject . "'"); 
-$row_db = mysqli_fetch_row($result_db);  
-$total_records = $row_db[0];  
-$total_pages = ceil($total_records / $limit); 
-/* echo  $total_pages; */
-if ($total_pages > 1){
-$pagLink = "<ul class='pagination'>";  
-for ($i=1; $i<=$total_pages; $i++) {
-	
-	               $isActive = '';
-    if($i == $page){
-        $isActive = 'active';
-    }
-              $pagLink .= "<li class='".$isActive."page-item'><a class=' page-link page mx-1 px-3 py-1' href='Searchresult.php?subsubject=".$subsubject."&page=".$i."'>".$i."</a></li>";	
-}
-echo $pagLink . "</ul>";  
-}
-?>
+<?=$pagination?>
 
 
 
