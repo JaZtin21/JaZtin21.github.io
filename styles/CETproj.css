@@ -47,6 +47,7 @@ body{
     min-width: 100%;
     min-height: 100%;
 	object-fit: cover;
+	color: #343a40;
 }
 
 .homebutton{
@@ -110,7 +111,7 @@ body{
 .searchbox{
 	height:40px;
 	border: 2px solid #313030;
-	border-radius: 5px;
+	border-radius: 2px;
 
 
 	background-color:white;
@@ -219,7 +220,7 @@ body{
         overflow: hidden;
         text-overflow: scroll;
 		   text-overflow: ellipsis;
-		   font-size:18px;
+		   font-size:15px;
 
 	
 }
@@ -227,8 +228,27 @@ body{
 	color:#686868;
 	font-family: cambria;
 	font-weight:bold;
-	font-size:15px;
+	font-size:12px;
+	white-space: nowrap;
+     overflow: hidden;
+     text-overflow: scroll;
+    text-overflow: ellipsis;
+	
 
+}
+.subsubject{
+	border-left:5px solid #343a40;
+	color:black;
+	
+	
+}
+.subsubject:hover{
+	border-left:5px solid #ffdf00;
+	background-color: #343a40;
+	cursor:pointer;
+	color:white;
+	
+	
 }
 .bookimagecontainerhome{
 
@@ -554,6 +574,7 @@ box-shadow: 0 3px 3px rgba(0,0,0,0.25),
 }
 .browsecontainer {
 	min-height:650px;
+	
 }
 .advtabs a{
 	
@@ -828,16 +849,16 @@ color:white;
 }
 .itemprice {
 	color: white;
-	background-color: #343a40;
-	max-width:90px;
+
+
 	border-radius:5px;
-	text-align:center;
-    overflow: hidden;
-	text-overflow: ellipsis;
+	text-align:left;
+
 
 
 	
 }
+
 @media screen and (max-width: 47.99em) {
 	.itemdescription {
 	color:#343a40;
@@ -895,6 +916,27 @@ color:white;
 	color: white;
 	
 
+	
+}
+.activepage-item a{
+		text-decoration:none;
+	cursor: pointer;
+	color: white!important;
+	background-color:#a31f1f!important;
+		border-radius:5px;
+	text-decoration:none;
+	box-shadow:0px 1px 1px 0px rgba(0, 0, 0, 0.50);
+	
+}
+
+.activepage-items{
+		text-decoration:none;
+	cursor: pointer;
+	color: white!important;
+	background-color:#a31f1f!important;
+		border-radius:5px;
+	text-decoration:none;
+	box-shadow:0px 1px 1px 0px rgba(0, 0, 0, 0.50);
 	
 }
 .page:hover {
@@ -994,7 +1036,7 @@ width:75%;
 
 	box-shadow:-3px 0 2px 0 rgba(0,0,0,0.25);
 
-	background-color:#dbac5d;
+	border:3px solid #343a40;
 }
 .fileinput{
 
@@ -1005,4 +1047,14 @@ width:75%;
 }
 .bookimageinput{
 	flex-direction:column;
+}
+.loginbutton{
+	border-radius:5px!important;
+		border:none!important;
+}
+.signupbutton{
+	border-radius:5px!important;
+	border:none!important;
+
+	
 }
