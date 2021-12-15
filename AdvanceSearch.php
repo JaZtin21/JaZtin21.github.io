@@ -29,7 +29,16 @@ include('database.php');
   
   <script src="./scripts/CETproj.js"></script>
   <link rel="stylesheet" href="./styles/CETproj.css" />
-
+<script>
+function empty() {
+    var x;
+    x = document.getElementById("advform").value;
+    if (x == "") {
+        alert("Please Enter a Value");
+        return false;
+    };
+}
+</script>
 </head>
 
 <body style="background-color:white;background-size:cover;background-attachment:fixed;" >
@@ -333,7 +342,8 @@ while($row = mysqli_fetch_assoc($journals_result)) {
 	</div>
     <div id="AdvancedSearch" class="container tab-pane fade ">
 	<div class="d-flex advform justify-content-center px-0 mx-0 mt-3">
-      		<form class="" action="confirmation.php" method="post" autocomplete="false" autocomplete="off"  >
+
+                <form id="advform" class="" action="advancedsearching.php" method="GET"  onsubmit = "return validate()" autocomplete="off"   >
 				<div class="modal-header align-items-center justify-content-center py-2 ">				
 					<h4 class="modal-title">Advanced Search</h4>
 		
@@ -341,74 +351,74 @@ while($row = mysqli_fetch_assoc($journals_result)) {
 				<div class="modal-body  ">				
 					<div class="form-group">
 						<label>Title:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+						<input type="text" name="title" class="form-control"  autocomplete="off"  autocomplete="false" >
 					</div>
 					<div class="form-group">
 						<label>Author:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+						<input type="text" name="author" class="form-control"  autocomplete="off"  autocomplete="false" >
 					</div>
 	                <div class="form-group">
 						<label>ISBN:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+						<input type="text"  name="isbn" class="form-control"  autocomplete="off"  autocomplete="false" >
 					</div>
 					
 
                     <div class="form-group">
 						<label>Publisher:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+						<input type="text"  name="publisher" class="form-control"  autocomplete="off"  autocomplete="false" >
 					</div>
 					<div class="form-group">
 						<label>Keyword:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+						<input type="text"  name="keyword" class="form-control"  autocomplete="off"  autocomplete="false" >
 					</div>
 				</div>
-				<div class="modal-footer justify-content-center bg-light ">
+				<div class="modal-footer justify-content-center  ">
 					
 		
-					<input type="submit" class="btn btn-dark"   value="Search" style="width:100%;border:1px solid black;">
+					<input id="submitBtnId" type="submit" class="btn "   value="Search" style="width:100%;color:white;">
 				</div>
 			</form>
-			</div>
+  <script>
+document.getElementById("submitBtnId").addEventListener("click", function(event){
+  // event.preventDefault() will stop your submit.
+  
+  
+   var input = document.getElementById('advform').getElementsByTagName("input");
+    var k = "";
+            for (var i = 0; i < input.length; i++) {
+                var a = input[i];
+				if (a.type != "submit" ) 
+                {
+                   k = k +  a.value + " ";
+
+   
+                }
+				
+			}
+			
+			if (k.trim() == ""){
+				event.preventDefault();
+				alert("Please Enter a Value");
+			}else {
+				event.currentTarget.submit();
+			}
+			
+            
+  
+  
+});
+
+
+
+</script> 	
+ 	</div>
     </div>
+
 
 
 </div>
 
-<!-- 		<form action="confirmation.php" method="post" autocomplete="false" autocomplete="off"  >
-				<div class="modal-header align-items-center justify-content-center">				
-					<h4 class="modal-title">Advanced Search</h4>
-		
-				</div>
-				<div class="modal-body">				
-					<div class="form-group">
-						<label>Title:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-					<div class="form-group">
-						<label>Author:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-	                <div class="form-group">
-						<label>ISBN:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-					
 
-                    <div class="form-group">
-						<label>Publisher:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-					<div class="form-group">
-						<label>Keyword:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-				</div>
-				<div class="modal-footer justify-content-center">
-					
-		
-					<input type="submit" class="btn btn-light"   value="Search" style="background-color:white !important;color:black;width:50%;box-shadow:0px 1px 1px 0px black;">
-				</div>
-			</form> -->
 		
 
 

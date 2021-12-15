@@ -23,6 +23,12 @@ body{
 
 	
 }
+#submitBtnId{
+background-color:#343a40!important;
+}
+#submitBtnId:hover{
+	background-color:#a31f1f!important;
+}
 .logobox{
 	height:240px;
 }
@@ -532,9 +538,7 @@ flex:65%;
 
 .advform form{
 width:75%;
-box-shadow: 0 3px 3px rgba(0,0,0,0.25), 
-			0 3px 3px rgba(0,0,0,0.22);
-			}
+}
 .advform modal-body{
 	
 	display: flex;
@@ -546,6 +550,9 @@ box-shadow: 0 3px 3px rgba(0,0,0,0.25),
 
 	height: 100%;
 	text-align: left;
+}
+.sbmitbtn:hover{
+	background-color:#7f1919 !important;
 }
 
 .advform input {

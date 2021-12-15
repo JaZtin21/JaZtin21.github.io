@@ -351,6 +351,8 @@ $total_pages = $row_db[0];
 <h5 class="resultfor mx-2 px-2 py-1" >
 <?php echo $subsubject ?>
 </h5>
+<p style="color:#666;position:relative;top:10px;" >page: <?php echo $page ?> of <?php echo $lastpage ?> </p>
+
 
 
 
@@ -379,6 +381,9 @@ $total_pages = $row_db[0];
 	
     <?php
     }
+		if ($total_pages == 0) { /* code to do */ 
+			echo ("No Results Found");
+		}
 
 ?>
 <?=$pagination?>
