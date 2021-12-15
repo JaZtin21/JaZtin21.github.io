@@ -130,7 +130,7 @@ if(isset($_GET['error'])) {
 
 </div>
 <ul class="homebuttons" style="padding: 0;list-style-type: none;">
-<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='LibraryHome.php'>"; ?>
+<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='index.php'>"; ?>
 <li class="homebutton  d-flex align-items-center mt-2  w-100 " >
 <i class="fas fa-home h-10 mr-2 align-items-center "></i><h5 class=" buttontext align-items-center mt-2 justify-content-center" >Home</h5>
 </li>
@@ -174,7 +174,7 @@ if(isset($_GET['error'])) {
     <div id="home" class="container tab-pane active mt-3">
 
 	<div class="d-flex addbookform justify-content-center px-0 mx-0 mt-3">
-      		<form class="" action="addBook.php" method="post" autocomplete="false" autocomplete="off" enctype="multipart/form-data">
+      		<form class="" action="./scripts/addBook.php" method="post" autocomplete="false" autocomplete="off" enctype="multipart/form-data">
 				<div class="modal-header bookimageinput align-items-center justify-content-center py-2  d-flex ">				
 					<div class="bookimageaddbook  px-1 py-1">
                     <div class="bookimagebox d-flex align-items-center justify-content-center h-100  ">

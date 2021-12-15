@@ -30,9 +30,9 @@ if (!password_verify($password, $current_user['password'])) {
     $_SESSION['logintype'] = $current_user['type'];
 
     if ($current_user['type'] == 'admin') {
-        header('Location: ../AdminHome.php');
+        header('Location: ../');
     } else if ($current_user['type'] == 'student') {
-        header('Location: ../AdminHome.php');
+        header('Location: ../');
     } else {
         die('404: File not Found!');
     }

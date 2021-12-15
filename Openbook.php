@@ -140,7 +140,7 @@ if (isset($_SESSION['logintype'])){
 
 </div>
 <ul class="homebuttons" style="padding: 0;list-style-type: none;">
-<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='LibraryHome.php'>"; ?>
+<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='index.php'>"; ?>
 <li class="homebutton  d-flex align-items-center mt-2  w-100 " >
 <i class="fas fa-home h-10 mr-2 align-items-center "></i><h5 class=" buttontext align-items-center mt-2 justify-content-center" >Home</h5>
 </li>
@@ -215,7 +215,7 @@ while($row = mysqli_fetch_assoc($bookselect)) {
 <div class="bookimagehome  px-2 pt-2">
 <div class="bookimagebox d-flex align-items-center justify-content-center h-100  ">
 <?php
-echo '<img class="bookimg text-center "  alt="No Image Preview" src="'.$row['image'] .'"/>';
+echo '<img class="bookimg text-center "  alt="No Image Preview" src="./uploads/images/'.$row['image'] .'"/>';
 ?>
 </div>
 

@@ -139,7 +139,7 @@ if (isset($_SESSION['logintype'])){
 
 </div>
 <ul class="homebuttons" style="padding: 0;list-style-type: none;">
-<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='LibraryHome.php'>"; ?>
+<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='index.php'>"; ?>
 <li class="homebutton  d-flex align-items-center mt-2  w-100 " >
 <i class="fas fa-home h-10 mr-2 align-items-center "></i><h5 class=" buttontext align-items-center mt-2 justify-content-center" >Home</h5>
 </li>
@@ -359,14 +359,14 @@ $total_pages = $row_db[0];
 	<?php echo "<a class='card  my-3 productcard d-block text-decoration-none ' href ='Openbook.php?id=".$row["id"]."'>"; ?>
 	<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2" >
 	<div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimg" >
-	<?php echo '<img class="cardimg text-dark"  alt="No Image Preview " src="'.$row['image'] .'"/>';  ?>
+	<?php echo '<img class="cardimg text-dark"  alt="No Image Preview " src="./uploads/images/'.$row['image'] .'"/>';  ?>
 
 	</div>
     <div class="card-body p-0 d-flex productcardbody" >
 	<div class="col pr-0"> 
         <h4 class="card-title itemname my-0  w-100 "><?php echo $row["title"]; ?></h4>
         <p class="card-text itemprice px-2 bg-dark my-1 d-inline-flex">-<?php echo substr($row['author'], 0, 20) .((strlen($row['author']) > 20) ? '...' : ''); ?> </p> 
-        <p class="card-text itemdescription my-1  w-100">Adaptation of the first of J.K. Rowling's popular children's novels about Harry Potter, a boy who learns on his eleventh birthday that he is the orphaned son of two powerful wizards and possesses unique magical powers of his own. He is summoned from his life as an unwanted child to become a student at Hogwarts, an English boarding school for wizards. There, he meets several friends who become his closest allies and help him discover the truth about his parents' mysterious deaths.</p>
+        <p class="card-text itemdescription my-1  w-100"><?php echo $row['description'] ?></p>
     </div>
 
     </div>
