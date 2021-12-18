@@ -1,6 +1,29 @@
 
 
+function fill(Value) {
+  $('#search').val(Value);
+
+  $('#display').hide();
+}
+
 $(document).ready(function () {
+  $("#search").keyup(function () {
+    var title = $("#search").val();
+    if (title == "") {
+      $("#display").html("");
+    } else {
+      $.ajax({
+        type: "POST",
+        url: "./scripts/searchBook.php",
+        data: {
+          search: title
+        },
+        success: function (result) {
+          $('#display').html(result).show();
+        }
+      })
+    }
+  });
 
   $('.owlhero').owlCarousel({
 

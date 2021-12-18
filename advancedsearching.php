@@ -139,7 +139,7 @@ if (isset($_SESSION['logintype'])){
 
 </div>
 <ul class="homebuttons" style="padding: 0;list-style-type: none;">
-<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='LibraryHome.php'>"; ?>
+<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='./'>"; ?>
 <li class="homebutton  d-flex align-items-center mt-2  w-100 " >
 <i class="fas fa-home h-10 mr-2 align-items-center "></i><h5 class=" buttontext align-items-center mt-2 justify-content-center" >Home</h5>
 </li>

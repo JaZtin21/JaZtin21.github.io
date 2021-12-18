@@ -158,7 +158,7 @@ if(isset($_GET['error'])) {
       <a href="ManageBookspageAdd.html" class="nav-link active pt-3" data-toggle="tab" href="#home"><div class="d-flex align-items-center justify-content-center "><i class="fas fa-shopping-cart"></i></div><div class="mx-3">Add Books</div></a>
     </li>
     <li class="nav-item advtabs">
-      <a href="ManageBookspageEdit.html" class="nav-link  pt-3"  ><div class="d-flex align-items-center justify-content-center"><i class="fas fa-file"></i></div>Edit Books</a>
+      <a href="ManageBookspageEdit.php" class="nav-link  pt-3"  ><div class="d-flex align-items-center justify-content-center"><i class="fas fa-file"></i></div>Edit Books</a>
     </li>
 
   </ul>

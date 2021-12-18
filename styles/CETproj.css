@@ -1,19 +1,13 @@
-body{
 
-}
 .leftblock{
 	
 	flex:23%;	
 	min-width:240px;
 	position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  top: 64px;
-  align-self: flex-start;
+  	position: sticky;
+  	top: 64px;
+  	align-self: flex-start;
 
-	
-	
-
-	
 
 }
 .logo{

@@ -55,22 +55,13 @@ include('database.php');
 		
 
 if (isset($_SESSION['logintype'])){
-   
-   if ($_SESSION['firstname'] && $_SESSION['lastname']) {
-  $firstname = $_SESSION['firstname'];
-  $lastname = $_SESSION['lastname'];
- 
+  if($_SESSION['firstname'] && $_SESSION['lastname']) {
+    $firstname = $_SESSION['firstname'];
+    $lastname = $_SESSION['lastname'];
+  }
   echo "$firstname $lastname";
-  
-}?>
-	
-
-
-
-<?php       
-	 }else  {
-		 echo ("Visitor");
-     
+} else {
+  echo "Visitor";
 }
 ?>
 		
@@ -274,7 +265,7 @@ while($row = mysqli_fetch_assoc($rs_result)) {
 <div class="bookimagehome  px-2 pt-2">
 <div class="bookimagebox d-flex align-items-center justify-content-center h-100  ">
 <?php
-echo '<img class="bookimg text-center"  alt="No Image Preview" src="'.$row['image'] .'"/>';
+echo '<img class="bookimg text-center"  alt="No Image Preview" src="./uploads/images/'. $row['image'] .'"/>';
 ?>
 
 </div>
