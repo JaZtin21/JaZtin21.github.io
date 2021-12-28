@@ -93,6 +93,9 @@ if (isset($_SESSION['logintype'])){
 <?php       
     }else if ($_SESSION['logintype'] === 'student') {
 ?>
+       <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="bookmarks.php">Bookmarks</a>
+      </li>	
 	   <li class="nav-item bg-sm-dark">
         <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
       </li>	  
@@ -215,7 +218,15 @@ if (isset($_GET["page"])) {
 	};  
 $start_from = ($page-1) * $limit;  
 
-$sql = "SELECT * FROM journals where Department= '" . $Department . "' LIMIT $start_from, $limit ";
+$sortby = $_GET['sortby']??'';
+
+if ($sortby == "" || $sortby == "ASC"){
+	$sortby = "ASC";
+}else {
+	$sortby = "DESC";
+}
+
+$sql = "SELECT * FROM journals where Department= '" . $Department . "' LIMIT ORDER BY title $sortby $start_from, $limit ";
 $bookselect = mysqli_query($conn, $sql);
 
 
@@ -234,7 +245,7 @@ $bookselect = mysqli_query($conn, $sql);
 	   First get total number of rows in data table. 
 	   If you have a WHERE clause in your query, make sure you mirror it here.
 	*/
-$result_db = mysqli_query($conn,"SELECT COUNT(*) FROM journals where Department= '" . $Department . "'"); 
+$result_db = mysqli_query($conn,"SELECT COUNT(*) FROM journals where Department= '" . $Department . "' ORDER BY title $sortby "); 
 $row_db = mysqli_fetch_row($result_db);  
 $total_pages = $row_db[0];  
 
@@ -269,7 +280,7 @@ $total_pages = $row_db[0];
 		$pagination .= "<div class=\"pagination\">";
 		//previous button
 		if ($page > 1) 
-			$pagination.= "<a class=' page mr-1 px-2 pb-1' href='Journalsearchresult.php?Department=".$Department."&page=".$prev."'>«</a>";
+			$pagination.= "<a class=' page mr-1 px-2 pb-1' href='Journalsearchresult.php?Department=".$Department."&page=".$prev."&sortby=".$sortby."'>«</a>";
 		else
 			$pagination.= "<span class=\"disabled pb-1 d-none\">« previous</span>";	
 		
@@ -282,7 +293,7 @@ $total_pages = $row_db[0];
 				if ($counter == $page)
 					$pagination.= "<span class=\"activepage-items mx-1 px-2 \">$counter</span>";
 				else
-					$pagination.= "<a class='  page mx-1 px-2' href='Journalsearchresult.php?Department=".$Department."&page=".$counter."'>$counter</a>";					
+					$pagination.= "<a class='  page mx-1 px-2' href='Journalsearchresult.php?Department=".$Department."&page=".$counter."&sortby=".$sortby."'>$counter</a>";					
 			}
 		}
 		elseif($lastpage > 5 + ($adjacents * 2))	//enough pages to hide some
@@ -295,48 +306,48 @@ $total_pages = $row_db[0];
 					if ($counter == $page)
 						$pagination.= "<span class=\"activepage-items mr-1 px-2 \">$counter</span>";
 					else
-						$pagination.= "<a class='  page mr-1 px-2' href='Journalsearchresult.php?Department=".$Department."&page=".$counter."'>$counter</a>";					
+						$pagination.= "<a class='  page mr-1 px-2' href='Journalsearchresult.php?Department=".$Department."&page=".$counter."&sortby=".$sortby."'>$counter</a>";					
 				}
 				$pagination.= "<span class=\"mr-1 \">...</span>";
-				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$lpm1."' >$lpm1</a>";
-				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$lastpage."' >$lastpage</a>";		
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$lpm1."&sortby=".$sortby."' >$lpm1</a>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$lastpage."&sortby=".$sortby."' >$lastpage</a>";		
 			}
 			//in middle; hide some front and some back
 			elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
 			{
-				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=1' >1</a>";
-				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=2' >2</a>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=1&sortby=".$sortby."' >1</a>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=2&sortby=".$sortby."' >2</a>";
 				$pagination.= "<span class=\"mr-1 \">...</span>";
 				for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++)
 				{
 					if ($counter == $page)
 						$pagination.= "<span class=\"activepage-items mr-1 px-2 \">$counter</span>";
 					else
-						$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$counter."' >$counter</a>";					
+						$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$counter."&sortby=".$sortby."' >$counter</a>";					
 				}
 				$pagination.= "<span class=\"mr-1 \">...</span>";
-				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$lpm1."' >$lpm1</a>";
-				$pagination.= "<a class='   page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$lastpage."' >$lastpage</a>";		
+				$pagination.= "<a class='  page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$lpm1."&sortby=".$sortby."' >$lpm1</a>";
+				$pagination.= "<a class='   page mr-1 px-2 ' href='Journalsearchresult.php?Department=".$Department."&page=".$lastpage."&sortby=".$sortby."' >$lastpage</a>";		
 			}
 			//close to end; only hide early pages
 			else
 			{
-				$pagination.= "<a class='  page mr-1 px-2' href='Journalsearchresult.php?Department=".$Department."&page=1' >1</a>";
-				$pagination.= "<a class='   page mr-1 px-2' href='Journalsearchresult.php?Department=".$Department."&page=2'>2</a>";
+				$pagination.= "<a class='  page mr-1 px-2' href='Journalsearchresult.php?Department=".$Department."&page=1&sortby=".$sortby."' >1</a>";
+				$pagination.= "<a class='   page mr-1 px-2' href='Journalsearchresult.php?Department=".$Department."&page=2&sortby=".$sortby."'>2</a>";
 				$pagination.= "<span class=\"mr-1 \">...</span>";
 				for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++)
 				{
 					if ($counter == $page)
 						$pagination.= "<span class=\"activepage-items mr-1 px-2 \">$counter</span>";
 					else
-						$pagination.= "<a class='   page mr-1 px-2 pb-1 ' href='Journalsearchresult.php?Department=".$Department."&page=".$counter."'>$counter</a>";					
+						$pagination.= "<a class='   page mr-1 px-2 pb-1 ' href='Journalsearchresult.php?Department=".$Department."&page=".$counter."&sortby=".$sortby."'>$counter</a>";					
 				}
 			}
 		}
 		
 		//next button
 		if ($page < $counter - 1) 
-			$pagination.= "<a class='   page mr-1 px-2 pb-1' href='Journalsearchresult.php?Department=".$Department."&page=".$next."' >»</a>";
+			$pagination.= "<a class='   page mr-1 px-2 pb-1' href='Journalsearchresult.php?Department=".$Department."&page=".$next."&sortby=".$sortby."' >»</a>";
 		else
 			$pagination.= "<span class=\"disabled d-none\">next »</span>";
 		$pagination.= "</div>\n";		
@@ -345,6 +356,7 @@ $total_pages = $row_db[0];
 
 
 <div class="logincontainer browsecontainer d-flex px-3 pb-3 " style="width:99.3%;margin-top:64px;">
+<div class=" categoriescontentstop w-100  mx-0 d-inline-flex mt-3" style="max-width:100%;">
 <!-- Nav tabs -->
 <div class="resultsection mt-2 d-flex align-items-center  w-100">
 <h5 class="resulttext" > Search Result: </h5>
@@ -353,9 +365,25 @@ $total_pages = $row_db[0];
 </h5>
 <p style="color:#666;position:relative;top:10px;" >page: <?php echo $page ?> of <?php echo $lastpage ?> </p>
 
+</div>
+<div class="d-inline-flex  align-items-center mr-md-0 mr-1" style="border-bottom: 2px solid black;">
+
+        <select id="myselect" class="selectpicker myselect show-tick py-1 "  onchange="location= this.value;"   >
+		
+	  <?php if ($sortby == "ASC"){ 
+         echo "<option value='Journalsearchresult.php?Department=".$Department."&sortby=ASC' selected >Sort: Asc</option>"; 
+	     echo "<option value='Journalsearchresult.php?Department=".$Department."&sortby=DESC' >Sort: Desc</option>";
+		 }else {
+	    
+		 echo "<option value='Journalsearchresult.php?Department=".$Department."&sortby=ASC' >Sort: Asc</option>"; 
+		 echo "<option value='Journalsearchresult.php?Department=".$Department."&sortby=DESC' selected>Sort: Desc</option>";	 
+		 }
+		 ?>
 
 
+        </select>
 
+</div>
 
 </div>
 <div id="target-content" class="productsitemlist   mt-2 mx-0 mx-md-0" style="" >
@@ -363,7 +391,7 @@ $total_pages = $row_db[0];
 ?>
 
 	<?php echo "<a class='card  my-3 productcard d-block text-decoration-none ' href ='Openjournal.php?id=".$row["id"]."'>"; ?>
-	<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2" >
+	<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2 w-100" >
 	<div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimg" >
 	<?php echo '<img class="cardimg text-dark"  alt="No Image Preview " src="'.$row['image'] .'"/>';  ?>
 
