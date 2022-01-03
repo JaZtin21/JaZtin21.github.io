@@ -49,7 +49,7 @@ if (isset($_GET['image'])) {
 
 	<!-- <script src="./scripts/CETproj.js"></script> -->
 	<link rel="stylesheet" href="./styles/CETproj.css" />
-	<script src="./scripts/test.js"></script>
+	<script src="./scripts/script.js"></script>
 
 
 	<style>
@@ -90,7 +90,7 @@ if (isset($_GET['image'])) {
 					<button onclick="Opensidenav()" class=" ml-2 mr-1 ml-md-0 d-sm-block d-md-none my-0 align-items-center d-flex " type="button" style="background-color:white;font-size:25px;border:1px solid #F2FCFF;border-radius:3px;">
 						<span class="fas fa-bars my-1 opensidenav " style="background-color:white;color:black;line-height:1.1!important"></span>
 					</button>
-					<a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="CETproj.html" style="width:100%;">
+					<a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="./" style="width:100%;">
 						<img class="d-flex justify-content-center " src="./assets/images/puplogo.png" alt="Logo" style="height:38px;">
 					</a>
 				</div>
@@ -100,7 +100,7 @@ if (isset($_GET['image'])) {
 					<div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar">
 						<ul class="navbar-nav ">
 							<li class="nav-item ">
-								<a class="nav-link" style="color:white;text-decoration:none;" href="CETproj.html">Welcome <?php echo "$firstname $lastname" ?></a>
+								<a class="nav-link" style="color:white;text-decoration:none;" href="./">Welcome <?php echo "$firstname $lastname" ?></a>
 							</li>
 
 

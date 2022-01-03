@@ -27,7 +27,7 @@ include('database.php');
   <link rel="stylesheet" href="assets/owlcarousel/assets/owl.theme.default.min.css">
   <script src="assets/owlcarousel/owl.carousel.js"></script>
   
-  <script src="./scripts/CETproj.js"></script>
+  <script src="./scripts/script.js"></script>
   <link rel="stylesheet" href="./styles/CETproj.css" />
 <script>
 function empty() {
