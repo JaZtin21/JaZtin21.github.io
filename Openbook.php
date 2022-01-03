@@ -27,6 +27,33 @@ include('database.php');
   <script src="./scripts/script.js"></script>
   <link rel="stylesheet" href="./styles/CETproj.css" />
 
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+          $('.button').on('click', function(e){
+              e.preventDefault();
+              var user_id = $(this).attr('user_id'); // Get the parameter user_id from the button
+              var book_id = $(this).attr('book_id'); // Get the parameter director_id from the button
+              var method = $(this).attr('method');  // Get the parameter method from the button
+              if (method == "Like") {
+                $(this).attr('method', 'Unlike') // Change the div method attribute to Unlike
+				$(this).attr('style', 'color:#f62121')
+              
+              } else {
+               $(this).attr('method', 'Like')
+               $(this).attr('style', 'color:white')
+              }
+	
+              $.ajax({
+                  url: 'favs.php', // Call favs.php to update the database
+                  type: 'GET',
+                  data: {user_id: user_id, book_id: book_id, method: method},
+                  cache: false,
+                  success: function(data){
+                  }
+              });
+          });
+      });
+ </script>								   
 </head>
 
 <body style="background-color:white;background-size:cover;background-attachment:fixed;" >
@@ -90,6 +117,9 @@ if (isset($_SESSION['logintype'])){
 <?php       
     }else if ($_SESSION['logintype'] === 'student') {
 ?>
+         <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="bookmarks.php">Bookmarks</a>
+      </li>	
 	   <li class="nav-item bg-sm-dark">
         <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
       </li>	  
@@ -209,7 +239,63 @@ while($row = mysqli_fetch_assoc($bookselect)) {
 ?>
 <div class="featuredbox d-flex mt-3 bg-light">
 <div class="d-inline-flex w-100 h-100" style="position:relative;">
-<div class="borrowbutton mx-3 my-3 px-2 py-1">  <a class="borrowa px-2 py-1" href="CETproj.html">Borrow</a></div>
+<div class="borrowbutton mx-3 my-3 px-2 py-1"> 
+<?php 
+
+$id = $_GET['id'];
+
+  $firstname = $_SESSION['firstname']??'';
+  $lastname = $_SESSION['lastname']??'';
+
+
+if(session_status() == PHP_SESSION_ACTIVE){
+	$useid="";
+   $user_id = "SELECT * FROM `accounts` WHERE firstname='".$firstname."' && lastname='".$lastname."' ";
+   $str = mysqli_query($conn, $user_id);
+   while($rower = mysqli_fetch_assoc($str)) {
+	  $useid = $rower['id'];
+   }
+   
+  
+  
+   
+
+  
+$result_db = mysqli_query($conn,"SELECT * FROM `bookmarks` WHERE book_id='".$id."' && user_id='".$useid."'  "); 
+$row_db = mysqli_fetch_row($result_db);  
+$bookm= $row_db[0]??'';  
+
+
+
+     if ($bookm == 0 && $useid != "" ) {   
+			    
+			 echo " <a class='button borrowa px-2 py-1 mx-1' method = 'Like'  user_id = ".$useid." book_id = ".$id."  style='color:#white;'><i class='fas fa-bookmark'  ></i></a> ";
+		
+        }else if  ($bookm > 0 && $useid != "" ) {   
+			   echo " <a class='button borrowa px-2 py-1 mx-1' method = 'Unlike'  user_id = ".$useid." book_id = ".$id."  style='color:#f62121;'><i class='fas fa-bookmark'  ></i></a> ";
+		 }
+		
+	   
+        
+     }
+        
+        
+	
+	
+?>
+
+
+
+      
+<?php
+ if ($useid == ""){
+?>
+<a class="borrowa px-2 py-1" href="loginpage.php"><i class='fas fa-bookmark'  ></i></a>
+<?php
+ }
+?>
+<a class="borrowa px-2 py-1" href="CETproj.html">Borrow</a>
+</div>
 <div class="bookimagecontainer justify-content-center d-flex h-100 ">
 
 <div class="bookimagehome  px-2 pt-2">

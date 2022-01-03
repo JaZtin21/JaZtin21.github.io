@@ -108,6 +108,9 @@ if (isset($_SESSION['logintype'])){
 <?php       
     }else if ($_SESSION['logintype'] === 'student') {
 ?>
+      <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="bookmarks.php">Bookmarks</a>
+      </li>	
 	   <li class="nav-item bg-sm-dark">
         <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
       </li>	  
@@ -136,9 +139,6 @@ if (isset($_SESSION['logintype'])){
 
 
 
-
-
-
 <div class="container mt-0 px-lg-3  px-md-2 px-1 navchange h-25 " style="max-width:1150px;">
 
 <div class="d-inline-flex w-100" >
@@ -157,7 +157,7 @@ if (isset($_SESSION['logintype'])){
 
 </div>
 <ul class="homebuttons" style="padding: 0;list-style-type: none;">
-<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='./'>"; ?>
+<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='index.php'>"; ?>
 <li class="homebutton  d-flex align-items-center mt-2  w-100 " >
 <i class="fas fa-home h-10 mr-2 align-items-center "></i><h5 class=" buttontext align-items-center mt-2 justify-content-center" >Home</h5>
 </li>

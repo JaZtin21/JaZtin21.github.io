@@ -87,6 +87,9 @@ if (isset($_SESSION['logintype'])){
 <?php       
     }else if ($_SESSION['logintype'] === 'student') {
 ?>
+       <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="bookmarks.php">Bookmarks</a>
+      </li>	
 	   <li class="nav-item bg-sm-dark">
         <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
       </li>	  
@@ -139,7 +142,7 @@ if (isset($_SESSION['logintype'])){
 
 </div>
 <ul class="homebuttons" style="padding: 0;list-style-type: none;">
-<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='./'>"; ?>
+<?php echo "<a class='bookdescriptioncontainerhome text-decoration-none ' href ='index.php'>"; ?>
 <li class="homebutton  d-flex align-items-center mt-2  w-100 " >
 <i class="fas fa-home h-10 mr-2 align-items-center "></i><h5 class=" buttontext align-items-center mt-2 justify-content-center" >Home</h5>
 </li>
@@ -215,6 +218,14 @@ $isbn = $_GET['isbn'];
 $publisher = $_GET['publisher'];
 $keyword = $_GET['keyword'];
 
+$sortby = $_GET['sortby']??'';
+
+if ($sortby == "" || $sortby == "ASC"){
+	$sortby = "ASC";
+}else {
+	$sortby = "DESC";
+}
+
     //Do real escaping here
 
     $query = "SELECT * FROM books";
@@ -239,7 +250,7 @@ $keyword = $_GET['keyword'];
     $sql = $query;
     if (count($conditions) > 0) {
       $sql .= " WHERE " . implode(' AND ', $conditions);
-      $sql .= "ORDER BY title ASC LIMIT $start_from, $limit";
+      $sql .= "ORDER BY title $sortby LIMIT $start_from, $limit";
 
     }
 
@@ -279,7 +290,7 @@ $adjacents = 1;
     $result_db = $query;
     if (count($conditions) > 0) {
       $result_db .= " WHERE " . implode(' AND ', $conditions);
-      $result_db .= "ORDER BY title ASC ";
+      $result_db .= "ORDER BY title $sortby ";
 
     }
 $row_db = mysqli_fetch_row(mysqli_query($conn,$result_db));  
@@ -315,7 +326,7 @@ $total_pages = $row_db[0];
 		$pagination .= "<div class=\"pagination\">";
 		//previous button
 		if ($page > 1) 
-			$pagination.= "<a class=' page mr-1 px-2 pb-1' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$prev."'>«</a>";
+			$pagination.= "<a class=' page mr-1 px-2 pb-1' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$prev."&sortby=".$sortby."'>«</a>";
 		else
 			$pagination.= "<span class=\"disabled pb-1 d-none\">« previous</span>";	
 		
@@ -328,7 +339,7 @@ $total_pages = $row_db[0];
 				if ($counter == $page)
 					$pagination.= "<span class=\"activepage-items mx-1 px-2 \">$counter</span>";
 				else
-					$pagination.= "<a class='  page mx-1 px-2' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$counter."'>$counter</a>";					
+					$pagination.= "<a class='  page mx-1 px-2' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$counter."&sortby=".$sortby."'>$counter</a>";					
 			}
 		}
 		elseif($lastpage > 5 + ($adjacents * 2))	//enough pages to hide some
@@ -341,48 +352,48 @@ $total_pages = $row_db[0];
 					if ($counter == $page)
 						$pagination.= "<span class=\"activepage-items mr-1 px-2 \">$counter</span>";
 					else
-						$pagination.= "<a class='  page mr-1 px-2' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$counter."'>$counter</a>";					
+						$pagination.= "<a class='  page mr-1 px-2' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$counter."&sortby=".$sortby."'>$counter</a>";					
 				}
 				$pagination.= "<span class=\"mr-1 \">...</span>";
-				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$lpm1."' >$lpm1</a>";
-				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$lastpage."' >$lastpage</a>";		
+				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$lpm1."&sortby=".$sortby."' >$lpm1</a>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$lastpage."&sortby=".$sortby."' >$lastpage</a>";		
 			}
 			//in middle; hide some front and some back
 			elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
 			{
-				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=1' >1</a>";
-				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=2' >2</a>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=1&sortby=".$sortby."' >1</a>";
+				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=2&sortby=".$sortby."' >2</a>";
 				$pagination.= "<span class=\"mr-1 \">...</span>";
 				for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++)
 				{
 					if ($counter == $page)
 						$pagination.= "<span class=\"activepage-items mr-1 px-2 \">$counter</span>";
 					else
-						$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$counter."' >$counter</a>";					
+						$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$counter."&sortby=".$sortby."' >$counter</a>";					
 				}
 				$pagination.= "<span class=\"mr-1 \">...</span>";
-				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$lpm1."' >$lpm1</a>";
-				$pagination.= "<a class='   page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$lastpage."' >$lastpage</a>";		
+				$pagination.= "<a class='  page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$lpm1."&sortby=".$sortby."' >$lpm1</a>";
+				$pagination.= "<a class='   page mr-1 px-2 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$lastpage."&sortby=".$sortby."' >$lastpage</a>";		
 			}
 			//close to end; only hide early pages
 			else
 			{
-				$pagination.= "<a class='  page mr-1 px-2' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=1' >1</a>";
-				$pagination.= "<a class='   page mr-1 px-2' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=2'>2</a>";
+				$pagination.= "<a class='  page mr-1 px-2' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=1&sortby=".$sortby."' >1</a>";
+				$pagination.= "<a class='   page mr-1 px-2' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=2&sortby=".$sortby."'>2</a>";
 				$pagination.= "<span class=\"mr-1 \">...</span>";
 				for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++)
 				{
 					if ($counter == $page)
 						$pagination.= "<span class=\"activepage-items mr-1 px-2 \">$counter</span>";
 					else
-						$pagination.= "<a class='   page mr-1 px-2  ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$counter."'>$counter</a>";					
+						$pagination.= "<a class='   page mr-1 px-2  ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$counter."&sortby=".$sortby."'>$counter</a>";					
 				}
 			}
 		}
 		
 		//next button
 		if ($page < $counter - 1) 
-			$pagination.= "<a class='   page mr-1 px-2 pb-1 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."' >»</a>";
+			$pagination.= "<a class='   page mr-1 px-2 pb-1 ' href='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."&sortby=".$sortby."' >»</a>";
 		else
 			$pagination.= "<span class=\"disabled d-none\">next »</span>";
 		$pagination.= "</div>\n";		
@@ -391,6 +402,7 @@ $total_pages = $row_db[0];
 
 <div class="logincontainer browsecontainer d-flex px-3 pb-3 " style="width:99.3%;margin-top:64px;">
 <!-- Nav tabs -->
+<div class=" categoriescontentstop w-100  mx-0 d-inline-flex mt-3" style="max-width:100%;">
 <div class="resultsection mt-2 d-flex align-items-center  w-100">
 <h5 class="resulttext" > Search Result: </h5>
 <?php 
@@ -423,14 +435,43 @@ $total_pages = $row_db[0];
 <p style="color:#666;position:relative;top:10px;" >page: <?php echo $page ?> of <?php echo $lastpage ?> </p>
 
 
-
 </div>
+
+<div class="d-inline-flex  align-items-center mr-md-0 mr-1" style="border-bottom: 2px solid black;">
+
+        <select id="myselect" class="selectpicker myselect show-tick py-1 "  onchange="location= this.value;"   >
+		
+	  <?php if ($sortby == "ASC"){ 
+         echo "<option value='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."&sortby=ASC' selected >Sort: Asc</option>"; 
+	     echo "<option value='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."&sortby=DESC' >Sort: Desc</option>";
+		 }else {
+	    
+		 echo "<option value='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."&sortby=ASC' >Sort: Asc</option>"; 
+		 echo "<option value=advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."&sortby=DESC' selected>Sort: Desc</option>";	 
+		 }
+		 ?>
+
+
+        </select>
+
+
+<!-- <select name="sort" id="myselect"  class="py-1 " >
+
+
+	  <option value="nameasc"  >Name: Asc</option>
+	  <option value="namedesc"  >Name: Desc</option>
+	  <option value="priceasc"  >Price: Asc</option>
+	  <option value="pricedesc"  >Price: Desc</option>
+</select> -->
+</div>
+</div>
+
 <div id="target-content" class="productsitemlist   mt-2 mx-0 mx-md-0" style="" >
 <?php while($row = mysqli_fetch_assoc($bookselect)) { 
 ?>
 
 	<?php echo "<a class='card  my-3 productcard d-block text-decoration-none ' href ='Openbook.php?id=".$row["id"]."'>"; ?>
-	<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2" >
+	<div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2 w-100" >
 	<div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimg" >
 	<?php echo '<img class="cardimg text-dark"  alt="No Image Preview " src="'.$row['image'] .'"/>';  ?>
 
