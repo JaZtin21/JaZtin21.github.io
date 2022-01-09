@@ -226,8 +226,14 @@ if ($sortby == "" || $sortby == "ASC"){
 	$sortby = "DESC";
 }
 
-$sql = "SELECT * FROM journals where Department= '" . $Department . "' LIMIT ORDER BY title $sortby $start_from, $limit ";
-$bookselect = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM journals where Department = ? LIMIT ORDER BY title $sortby $start_from, $limit ";
+
+$stmt = mysqli_prepare($conn,$sql);
+mysqli_stmt_bind_param($stmt, "s", $Department);
+
+mysqli_stmt_execute($stmt);
+ 
+$bookselect = mysqli_stmt_get_result($stmt);
 
 
 

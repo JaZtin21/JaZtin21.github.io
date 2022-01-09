@@ -8,10 +8,21 @@ include('database.php');
   $book_id = $_GET['book_id'];
   
   if ($method == "Like") {
-    mysqli_query($conn,"INSERT INTO bookmarks (user_id, book_id) VALUES ('$user_id', '$book_id')");
+    
+	$query = "INSERT INTO bookmarks (user_id, book_id)  VALUES (?, ?);";
+
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "ss", $user_id, $book_id );
+    mysqli_stmt_execute($stmt);
+	
   }
   else {
-    mysqli_query($conn,"DELETE FROM bookmarks WHERE user_id = '$user_id' AND book_id = '$book_id'");
+
+	$query = "DELETE FROM bookmarks WHERE user_id = ? AND book_id = ? ";
+
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "ss", $user_id, $book_id );
+    mysqli_stmt_execute($stmt);
   }
 
 

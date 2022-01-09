@@ -93,6 +93,9 @@ if (isset($_SESSION['logintype'])){
 <?php       
     }else if ($_SESSION['logintype'] === 'student') {
 ?>
+       <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="bookmarks.php">Bookmarks</a>
+      </li>	
 	   <li class="nav-item bg-sm-dark">
         <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
       </li>	  

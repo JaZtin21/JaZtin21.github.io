@@ -221,8 +221,21 @@ if (isset($_GET["page"])) {
 	};  
 $start_from = ($page-1) * $limit;  
 
-$sql = "SELECT * FROM books where (title LIKE '%".$searchtext."%') OR (author LIKE '%".$searchtext."%') ORDER BY title $sortby LIMIT $start_from, $limit ";
-$bookselect = mysqli_query($conn, $sql);
+$searchedtext = "%" . $searchtext . "%";
+$sql = "SELECT * FROM books WHERE title LIKE ? OR author LIKE ? ORDER BY title $sortby LIMIT $start_from, $limit ";
+
+
+
+$stmt = mysqli_prepare($conn,$sql);
+mysqli_stmt_bind_param($stmt, "ss", $searchedtext, $searchedtext);
+
+mysqli_stmt_execute($stmt);
+ 
+$bookselect = mysqli_stmt_get_result($stmt);
+ 
+
+
+
 
 
 
