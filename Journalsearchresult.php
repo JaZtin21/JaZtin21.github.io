@@ -87,7 +87,7 @@ if (isset($_SESSION['logintype'])){
         <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php">Manage Books</a>
       </li>	
 	   <li class="nav-item bg-sm-dark">
-        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Manage Transactions</a>
+        <a class="nav-link navlinkbuttons" href="ManageTransactionReq.php">Manage Transactions</a>
       </li>	 
 
 <?php       

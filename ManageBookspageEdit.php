@@ -17,6 +17,7 @@ if (isset($_SESSION)) {
 }
 
 if (isset($_GET['image'])) {
+	$id = $_GET['id'];
 	$image = $_GET['image'];
 	$title = $_GET['title'];
 	$author = $_GET['author'];
@@ -32,10 +33,10 @@ if (isset($_GET['image'])) {
 	<title>Products</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-
+	<script src="./scripts/script.js"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -43,30 +44,14 @@ if (isset($_GET['image'])) {
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 	<link rel="stylesheet" href="./assets/owlcarousel/assets/owl.carousel.min.css">
 	<link rel="stylesheet" href="./assets/owlcarousel/assets/owl.theme.default.min.css">
-	<script src="./assets/vendors/jquery.min.js"></script>
 	<script src="./assets/owlcarousel/owl.carousel.js"></script>
 	<link rel="stylesheet" href="./assets/css/animate.css" />
 
-	<!-- <script src="./scripts/CETproj.js"></script> -->
 	<link rel="stylesheet" href="./styles/CETproj.css" />
-	<script src="./scripts/script.js"></script>
+
 
 
 	<style>
-		#display {
-			margin: 5px;
-			padding: 10px;
-			max-height: 200px;
-			overflow-x: hidden;
-			border-radius: 10px;
-			box-shadow: 0px 3px 10px;
-		}
-
-		#display a {
-			text-decoration: none;
-			color: black;
-		}
-
 		html {
 			height: 100%;
 		}
@@ -119,7 +104,7 @@ if (isset($_GET['image'])) {
 										Books</u></a>
 							</li>
 							<li class="nav-item bg-sm-dark">
-								<a class="nav-link navlinkbuttons" href="ManageTransactionReq.html">Manage
+								<a class="nav-link navlinkbuttons" href="ManageTransactionReq.php">Manage
 									Transactions</a>
 							</li>
 							<span class="navline my-1 "></span>
@@ -217,11 +202,11 @@ if (isset($_GET['image'])) {
 								<div class="input-group ml-2 d-inline-flex">
 									<i class="fas fa-search mr-2 align-items-center  my-auto"></i>
 									<input type="text" class="form-control my-auto" id='search' placeholder="Search" style="border:0;height:30px;padding-left:2px; outline:none;box-shadow:none;">
-									<div class="input-group-append">
+									<!-- <div class="input-group-append">
 										<button class="btn " type="submit" style="box-shadow:none;outline:none;">
 											<i class="fa fa-arrow-right"></i>
 										</button>
-									</div>
+									</div> -->
 								</div>
 
 							</div>
@@ -229,7 +214,7 @@ if (isset($_GET['image'])) {
 
 							<div class="d-flex addbookform justify-content-center px-0 mx-0 mt-3">
 
-								<form class="" action="confirmation.php" method="post" autocomplete="false" autocomplete="off">
+								<form class="" action="./scripts/updateBook.php?id=<?php echo $id ?>&image=<?php echo $image ?>" method="post" autocomplete="false" autocomplete="off">
 									<div class="modal-header bookimageinput align-items-center justify-content-center py-2  d-flex ">
 										<div class="bookimageaddbook  px-2 pt-2">
 											<div class="bookimagebox d-flex align-items-center justify-content-center h-100  ">
@@ -237,36 +222,33 @@ if (isset($_GET['image'])) {
 											</div>
 										</div>
 										<div class="mt-2">
-											<input type='file' class="fileinput" onchange="readURL(this);" value="./uploads/images/<?php echo $image ?>" />
+											<input type='file' name="image" class="fileinput" onchange="readURL(this);" value="./uploads/images/<?php echo $image ?>" />
 										</div>
 									</div>
 									<div class="modal-body  ">
 										<div class="form-group">
 											<label>Title:</label>
-											<input type="text" class="form-control" required="required" autocomplete="off" autocomplete="false" value="<?php echo $title; ?>">
+											<input type="text" name="title" class="form-control" required="required" autocomplete="off" autocomplete="false" value="<?php echo $title; ?>">
 										</div>
 										<div class="form-group">
 											<label>Author:</label>
-											<input type="text" class="form-control" required="required" autocomplete="off" autocomplete="false" value="<?php echo $author; ?>">
+											<input type="text" name="author" class="form-control" required="required" autocomplete="off" autocomplete="false" value="<?php echo $author; ?>">
 										</div>
 										<div class="form-group">
 											<label>ISBN:</label>
-											<input type="text" class="form-control" required="required" autocomplete="off" autocomplete="false" value="<?php echo $isbn; ?>">
+											<input type="text" name="isbn" class="form-control" required="required" autocomplete="off" autocomplete="false" value="<?php echo $isbn; ?>">
 										</div>
-
 
 										<div class="form-group">
 											<label>Publisher:</label>
-											<input type="text" class="form-control" required="required" autocomplete="off" autocomplete="false" value="<?php echo $publisher; ?>">
+											<input type="text" name="publisher" class="form-control" required="required" autocomplete="off" autocomplete="false" value="<?php echo $publisher; ?>">
 										</div>
 										<div class="form-group">
 											<label>Description:</label>
-											<textarea rows="5" input type="text" class="form-control" required="required" autocomplete="off" autocomplete="false"><?php echo $description; ?></textarea>
+											<textarea rows="5" input type="text" name="description" class="form-control" required="required" autocomplete="off" autocomplete="false"><?php echo $description; ?></textarea>
 										</div>
 									</div>
 									<div class="modal-footer justify-content-center my-0 ">
-
-
 										<input type="submit" class="btn btn-dark bg-dark" value="Save" style="width:100%;border:1px solid black;color:white">
 									</div>
 								</form>

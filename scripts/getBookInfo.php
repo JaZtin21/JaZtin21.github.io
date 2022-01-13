@@ -13,5 +13,7 @@ mysqli_stmt_execute($stmt);
 $stmt_result = mysqli_stmt_get_result($stmt);
 
 while($result = mysqli_fetch_assoc($stmt_result)){
-    header("Location: ../ManageBookspageEdit.php?image=".$result['image']."&title=".$result['title']."&author=".$result['author']."&isbn=".$result['isbn']."&publisher=".$result['publisher']."&description=".$result['description']);
+    header("Location: ../ManageBookspageEdit.php?id=".$result['id']."&image=".$result['image']."&title=".$result['title']."&author=".$result['author']."&isbn=".$result['isbn']."&publisher=".$result['publisher']."&description=".$result['description']);
 }
+
+mysqli_close($conn);

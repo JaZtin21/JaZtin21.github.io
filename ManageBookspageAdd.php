@@ -86,7 +86,7 @@ if(isset($_GET['error'])) {
         <a class="nav-link navlinkbuttons" href="./ManageBookspageAdd.php"><u>Manage Books</u></a>
       </li>	
 	   <li class="nav-item bg-sm-dark">
-        <a class="nav-link navlinkbuttons" href="ManageTransactionReq.html">Manage Transactions</a>
+        <a class="nav-link navlinkbuttons" href="ManageTransactionReq.php">Manage Transactions</a>
       </li>	 
  <span class="navline my-1 " ></span>
       <li class="nav-item bg-sm-dark">
