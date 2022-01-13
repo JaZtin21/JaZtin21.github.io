@@ -74,6 +74,33 @@ session_start();
 						</ul>
 					</div>
 				</div>
+<ul class="navbar-nav "  >
+	
+<?php
+if (isset($_SESSION['logintype'])){
+    if ($_SESSION['logintype'] === 'admin') {?>
+
+	  <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php">Manage Books</a>
+      </li>	
+	   <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Manage Transactions</a>
+      </li>	 
+
+<?php       
+    }else if ($_SESSION['logintype'] === 'student') {
+?>
+       <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="bookmarks.php">Bookmarks</a>
+      </li>	
+	   <li class="nav-item bg-sm-dark">
+        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
+      </li>	  
+<?php       
+    }
+}
+?>
+ <span class="navline my-1 " ></span>
 
 				<div class="collapse navbar-collapse ml-1   " id="collapsibleNavbar">
 					<div class=" d-flex ml-auto " style="">

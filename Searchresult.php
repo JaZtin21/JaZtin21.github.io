@@ -193,7 +193,7 @@ if (isset($_SESSION['logintype'])){
 <form class="input-group ml-2 d-inline-flex" action="search.php" method="GET" >
 
 <i class="fas fa-search mr-2 align-items-center  my-auto"></i>
-<input type="text" class="form-control my-auto" name="subsubject" placeholder="Search " style="border:0;height:30px;padding-left:2px; outline:none;box-shadow:none;">
+<input type="text" class="form-control my-auto" name="searchtext" placeholder="Search " style="border:0;height:30px;padding-left:2px; outline:none;box-shadow:none;">
 <div class="input-group-append">
       <button class="btn " type="submit" style="box-shadow:none;outline:none;">
         <i class="fa fa-arrow-right"></i>
@@ -224,10 +224,16 @@ if (isset($_GET["page"])) {
 	};  
 $start_from = ($page-1) * $limit;  
 
-$sql = "SELECT * FROM books where subsubject= '" . $subsubject . "' ORDER BY title $sortby LIMIT $start_from, $limit ";
-$bookselect = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM books where subsubject= ? ORDER BY title $sortby LIMIT $start_from, $limit ";
 
 
+$stmt = mysqli_prepare($conn,$sql);
+mysqli_stmt_bind_param($stmt, "s", $subsubject);
+
+mysqli_stmt_execute($stmt);
+ 
+$bookselect = mysqli_stmt_get_result($stmt);
+ 
 
 
 ?>

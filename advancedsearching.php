@@ -226,35 +226,87 @@ if ($sortby == "" || $sortby == "ASC"){
 	$sortby = "DESC";
 }
 
+
     //Do real escaping here
 
     $query = "SELECT * FROM books";
     $conditions = array();
+	$build = "";
+    $bindType = "";
 
     if(! empty($title)) {
-      $conditions[] = "title LIKE '%".$title."%'";
+
+      $conditions[] = "title LIKE ? ";
+	  $bindType .= "s" ; 
+	  $keywords = "%" . $title . "%";
+	  $build = array(&$keywords);
+
+	  
+
+
+
+	  
     }
     if(! empty($author)) {
-      $conditions[] = "author LIKE '%".$author."%'";
+ 
+	  
+	  $conditions[] = "author LIKE ? ";
+	  $bindType .= "s" ; 
+	  $keywords = "%" . $author . "%";
+	  $build = array(&$keywords);
+
+	  
     }
     if(! empty($isbn)) {
-      $conditions[] = "isbn LIKE '%".$isbn."%'";
+
+	  
+	  $conditions[] = "isbn LIKE  ? ";
+	  $bindType .= "s" ; 
+	  $keywords = "%" . $isbn . "%";
+	  $build = array(&$keywords);
+	
     }
     if(! empty($publisher)) {
-      $conditions[] = "publisher LIKE '%".$publisher."%'";
+
+	  
+	  $conditions[] = "publisher LIKE ? ";
+	  $bindType .= "s" ; 
+	  $keywords = "%" . $publisher . "%";
+	  $build = array(&$keywords);
+	 
+	  
+	  
     }
 	if(! empty($keyword)) {
-      $conditions[] = "title LIKE '%".$keyword."%' OR author LIKE '%".$keyword."%' OR isbn LIKE '%".$keyword."%' OR publisher LIKE '%".$keyword."%'";
-    }
+      $conditions[] = "title LIKE ? OR author LIKE ? OR isbn LIKE ? OR publisher LIKE ? ";
+	  $bindType .= "ssss" ;
+	  $keywords = "%" . $keyword . "%";
+	  $build = array(&$keywords, &$keywords,&$keywords,&$keywords);
+	  
+	 
+	  
+	  
+	  
 
+    }
+   
     $sql = $query;
     if (count($conditions) > 0) {
       $sql .= " WHERE " . implode(' AND ', $conditions);
       $sql .= "ORDER BY title $sortby LIMIT $start_from, $limit";
+	  
+	  $stmt = mysqli_prepare($conn,$sql);
+      call_user_func_array(array($stmt, "bind_param"), array_merge(array($bindType), $build));
 
-    }
+      mysqli_stmt_execute($stmt);
+	  
+	  
 
-    $bookselect = mysqli_query($conn,$sql);
+    } 
+   
+	
+    
+	$bookselect = mysqli_stmt_get_result($stmt);
 
 
 
@@ -442,12 +494,12 @@ $total_pages = $row_db[0];
         <select id="myselect" class="selectpicker myselect show-tick py-1 "  onchange="location= this.value;"   >
 		
 	  <?php if ($sortby == "ASC"){ 
-         echo "<option value='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."&sortby=ASC' selected >Sort: Asc</option>"; 
-	     echo "<option value='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."&sortby=DESC' >Sort: Desc</option>";
+         echo "<option value='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&sortby=ASC' selected >Sort: Asc</option>"; 
+	     echo "<option value='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&sortby=DESC' >Sort: Desc</option>";
 		 }else {
 	    
-		 echo "<option value='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."&sortby=ASC' >Sort: Asc</option>"; 
-		 echo "<option value=advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&page=".$next."&sortby=DESC' selected>Sort: Desc</option>";	 
+		 echo "<option value='advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&sortby=ASC' >Sort: Asc</option>"; 
+		 echo "<option value=advancedsearching.php?title=".$title."&author=".$author."&isbn=".$isbn."&publisher=".$publisher."&keyword=".$keyword."&sortby=DESC' selected>Sort: Desc</option>";	 
 		 }
 		 ?>
 

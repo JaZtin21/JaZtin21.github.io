@@ -266,6 +266,21 @@ session_start();
 				$next = $page + 1;							//next page is page + 1
 				$lastpage = ceil($total_pages / $limit);		//lastpage is = total pages / items per page, rounded up.
 				$lpm1 = $lastpage - 1;						//last page minus 1
+				$searchedtext = "%" . $searchtext . "%";
+				$sql = "SELECT * FROM books WHERE title LIKE ? OR author LIKE ? ORDER BY title $sortby LIMIT $start_from, $limit ";
+
+
+
+				$stmt = mysqli_prepare($conn, $sql);
+				mysqli_stmt_bind_param($stmt, "ss", $searchedtext, $searchedtext);
+
+				mysqli_stmt_execute($stmt);
+
+				$bookselect = mysqli_stmt_get_result($stmt);
+
+
+
+
 
 
 
