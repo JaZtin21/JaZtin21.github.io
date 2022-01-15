@@ -35,6 +35,7 @@ session_start();
         var user_id = $(this).attr('user_id'); // Get the parameter user_id from the button
         var book_id = $(this).attr('book_id'); // Get the parameter director_id from the button
         var method = $(this).attr('method'); // Get the parameter method from the button
+
         if (method == "Like") {
           $(this).attr('method', 'Unlike') // Change the div method attribute to Unlike
           $(this).attr('style', 'color:#f62121')
@@ -57,6 +58,54 @@ session_start();
         });
       });
     });
+
+    function show_confirm() {
+      // build the confirm box
+      var method = $("#borrowbtn").attr('method'); // Get the parameter method from the button
+      if (method == "Borrowing") {
+        var text = "Are you sure you want to borrow this book?";
+      } else {
+        var text = "Are you sure you want to cancel borrow request for this book?";
+      }
+
+      var c = confirm(text);
+
+
+
+      // if true
+      if (c) {
+
+        var method = $("#borrowbtn").attr('method'); // Get the parameter method from the button
+
+        var user_id = $("#borrowbtn").attr('user_id'); // Get the parameter user_id from the button
+        var book_id = $("#borrowbtn").attr('book_id'); // Get the parameter director_id from the button
+
+
+
+        if (method == "Borrowing") {
+          $("#borrowbtn").attr('method', 'Unborrowing') // Change the div method attribute to Unlike
+          $("#borrowbtn").html("Cancel request");
+
+        } else {
+          $("#borrowbtn").attr('method', 'Borrowing')
+          $("#borrowbtn").html("Borrow");
+        }
+
+        $.ajax({
+          url: 'borrow.php', // Call favs.php to update the database
+          type: 'GET',
+          data: {
+            user_id: user_id,
+            book_id: book_id,
+            method: method
+          },
+          cache: false,
+          success: function(data) {}
+        });
+      } else { // if false
+
+      }
+    }
   </script>
 </head>
 
@@ -72,7 +121,7 @@ session_start();
           <button onclick="Opensidenav()" class=" ml-2 mr-1 ml-md-0 d-sm-block d-md-none my-0 align-items-center d-flex " type="button" style="background-color:white;font-size:25px;border:1px solid #F2FCFF;border-radius:3px;">
             <span class="fas fa-bars my-1 opensidenav " style="background-color:white;color:black;line-height:1.1!important"></span>
           </button>
-          <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="./index.php" style="width:100%;">
+          <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="CETproj.html" style="width:100%;">
             <img class="d-flex justify-content-center " src="assets/images/puplogo.png" alt="Logo" style="height:38px;">
           </a>
         </div>
@@ -82,7 +131,7 @@ session_start();
           <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar">
             <ul class="navbar-nav ">
               <li class="nav-item ">
-                <a class="nav-link" style="color:white;text-decoration:none;" href="./index.php">Welcome <?php
+                <a class="nav-link" style="color:white;text-decoration:none;" href="CETproj.html">Welcome <?php
 
                                                                                                           if (isset($_SESSION['logintype'])) {
 
@@ -115,7 +164,7 @@ session_start();
                     <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php">Manage Books</a>
                   </li>
                   <li class="nav-item bg-sm-dark">
-                    <a class="nav-link navlinkbuttons" href="ManageTransactionReq.php">Manage Transactions</a>
+                    <a class="nav-link navlinkbuttons" href="ManageTransactionreq.php">Manage Transactions</a>
                   </li>
 
                 <?php
@@ -256,7 +305,6 @@ session_start();
                   $firstname = $_SESSION['firstname'] ?? '';
                   $lastname = $_SESSION['lastname'] ?? '';
 
-
                   if (session_status() == PHP_SESSION_ACTIVE) {
                     $useid = "";
                     $user_id = "SELECT * FROM `accounts` WHERE firstname='" . $firstname . "' && lastname='" . $lastname . "' ";
@@ -265,22 +313,28 @@ session_start();
                       $useid = $rower['id'];
                     }
 
-
-
-
-
-
                     $result_db = mysqli_query($conn, "SELECT * FROM `bookmarks` WHERE book_id='" . $id . "' && user_id='" . $useid . "'  ");
                     $row_db = mysqli_fetch_row($result_db);
                     $bookm = $row_db[0] ?? '';
-
-
 
                     if ($bookm == 0 && $useid != "") {
 
                       echo " <a class='button borrowa px-2 py-1 mx-1' method = 'Like'  user_id = " . $useid . " book_id = " . $id . "  style='color:#white;'><i class='fas fa-bookmark'  ></i></a> ";
                     } else if ($bookm > 0 && $useid != "") {
                       echo " <a class='button borrowa px-2 py-1 mx-1' method = 'Unlike'  user_id = " . $useid . " book_id = " . $id . "  style='color:#f62121;'><i class='fas fa-bookmark'  ></i></a> ";
+                    }
+
+                    $result_db = mysqli_query($conn, "SELECT * FROM `book_requests` WHERE book_id=" . $id . " && borrower_id=" . $useid . " && status = 'pending'  ");
+                    $row_db = mysqli_fetch_row($result_db);
+                    $bookb = $row_db[0] ?? '';
+
+
+
+                    if ($bookb == 0 && $useid != "") {
+
+                      echo " <a id='borrowbtn' class='borrowa  px-2 py-1' method = 'Borrowing'  user_id = " . $useid . " book_id = " . $id . " onclick='show_confirm()' >Borrow</a> ";
+                    } else if ($bookb > 0 && $useid != "") {
+                      echo " <a id='borrowbtn' class='borrowa  px-2 py-1' method = 'UnBorrowing'  user_id = " . $useid . " book_id = " . $id . " onclick='show_confirm()' >Cancel request</a> ";
                     }
                   }
 
@@ -296,10 +350,12 @@ session_start();
                   if ($useid == "") {
                   ?>
                     <a class="borrowa px-2 py-1" href="loginpage.php"><i class='fas fa-bookmark'></i></a>
+                    <a id="borrowbtn" class="borrowa  px-2 py-1" href="loginpage.php"> Borrow</a>
                   <?php
                   }
+
                   ?>
-                  <a class="borrowa px-2 py-1" href="./index.php">Borrow</a>
+
                 </div>
                 <div class="bookimagecontainer justify-content-center d-flex h-100 ">
 
