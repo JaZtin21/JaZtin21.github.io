@@ -198,7 +198,7 @@ if ($logintype != "admin") {
         <div class="pt-3 sticktodapat d-none d-lg-block" style="box-shadow:none;border-bottom:2px solid #b3b5b7;">
           <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item advtabs">
-              <a href="ManageTransactionReq.html" class="nav-link active pt-3">
+              <a href="ManageTransactionReq.php" class="nav-link active pt-3">
                 <div class="d-flex align-items-center justify-content-center "><i class="fas fa-shopping-cart"></i>
                 </div>
                 <div class="">Book Requests</div>
@@ -253,7 +253,7 @@ if ($logintype != "admin") {
                       <div class="col d-flex  align-items-center justify-content-center productcardimgcheck">
                         <div class="form-check-inline mx-0 my-0 px-auto h-100">
                           <label class="form-check-label mt-2 ">
-                            <input type="checkbox" name="requestedBook[]" class="form-check-input mx-0 my-0" value="' . $request['book_id'] . '">
+                            <input type="checkbox" name="requestId[]" class="form-check-input mx-0 my-0" value="' . $request['id'] . '">
                           </label>
                           <div class="col d-flex  mt-1 align-items-center justify-content-center productcardimgcheck">
                             <i class="fas fa-times"></i>
@@ -268,8 +268,11 @@ if ($logintype != "admin") {
                   ?>
 
                   <div class="d-flex flex-row pagination mt-2 text-dark">
-                    <a class="page mx-1 px-3 py-1 " href="?pagenum=1">First</a>
                     <?php
+                    if ($totalPages > 1) {
+                      echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=1">First</a>';
+                    }
+
                     if ($totalPages != 1) {
                       /* First we check if we are on page one. If we are then we don't need a link to 
                          the previous page or the first page so we do nothing. If we aren't then we
@@ -292,8 +295,11 @@ if ($logintype != "admin") {
                         }
                       }
                     }
+
+                    if ($totalPages > 1) {
+                      echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=' . $totalPages . '">Last</a>';
+                    }
                     ?>
-                    <a class="page mx-1 px-3 py-1 " href="?pagenum=<?php echo $totalPages ?>">Last</a>
                   </div>
 
                 </div>

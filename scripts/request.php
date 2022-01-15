@@ -1,14 +1,12 @@
 <?php
 include("../database.php");
 
-$requests = $_POST['requestedBook'];
-
-
+$requests = $_POST['requestId'];
 
 if (isset($_POST['AcceptRequests'])) {
     //Accept button clicked!
     foreach ($requests as $bookid) {
-        $query = "UPDATE book_requests SET status = 'confirmed' WHERE book_id = ?";
+        $query = "UPDATE book_requests SET status = 'confirmed' WHERE id = ?";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "i", $bookid);
         mysqli_stmt_execute($stmt);
@@ -26,7 +24,7 @@ if (isset($_POST['AcceptRequests'])) {
 if (isset($_POST['RejectRequests'])) {
     //Reject button clicked!
     foreach ($requests as $bookid) {
-        $query = "UPDATE book_requests SET status = 'declined' WHERE book_id = ?";
+        $query = "UPDATE book_requests SET status = 'declined' WHERE id = ?";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "i", $bookid);
         mysqli_stmt_execute($stmt);
