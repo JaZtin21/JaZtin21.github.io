@@ -206,7 +206,7 @@ if ($logintype != "admin") {
               </a>
             </li>
             <li class="nav-item advtabs">
-              <a href="ManageTransactionStatus.html" class="nav-link  active pt-3">
+              <a href="ManageTransactionStatus.php" class="nav-link  active pt-3">
                 <div class="d-flex align-items-center justify-content-center"><i class="fas fa-file"></i></div>Request Status
               </a>
             </li>
@@ -240,23 +240,23 @@ if ($logintype != "admin") {
                                   <p class="card-text itemdescription my-1  w-100">Borrower: ' . $request['borrower_fn'] . " " . $request['borrower_ln'] . '</p>
                                   <p class="card-text itemdescription my-1  w-100">Status: ' . $request['status'] . '</p>';
 
-                                  //If request confirmed, calculate days to borrow the book by the student
-                                  if ($request['status'] == "confirmed") {
-                                    $today = new DateTime("Now");
-                                    $deadline = new DateTime($request['date_of_process'] . '+ 5 days');
-                                    $duration = date_diff($deadline, $today);
-                                  
-                                    echo '<p class="card-text itemdescription my-1  w-100">Days of Claim Remaining: ' . $duration->format('%a days') . '</p>';
-                                  }
+                  //If request confirmed, calculate days to borrow the book by the student
+                  if ($request['status'] == "confirmed") {
+                    $today = new DateTime("Now");
+                    $deadline = new DateTime($request['date_of_process'] . '+ 5 days');
+                    $duration = date_diff($deadline, $today);
 
-                                  if ($request['status'] == "borrowed") {
-                                    $today = new DateTime("Now");
-                                    $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
-                                    $duration = date_diff($deadline, $today);
-                                  
-                                    echo '<p class="card-text itemdescription my-1  w-100">Days of Borrowed Remaining: ' . $duration->format('%a days') . '</p>';
-                                  }
-                                echo '</div>
+                    echo '<p class="card-text itemdescription my-1  w-100">Days of Claim Remaining: ' . $duration->format('%a days') . '</p>';
+                  }
+
+                  if ($request['status'] == "borrowed") {
+                    $today = new DateTime("Now");
+                    $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
+                    $duration = date_diff($deadline, $today);
+
+                    echo '<p class="card-text itemdescription my-1  w-100">Days of Borrowed Remaining: ' . $duration->format('%a days') . '</p>';
+                  }
+                  echo '</div>
                                 <div class="col pr-0" style="background-color: red">
                                 test
                               </div>
@@ -266,8 +266,12 @@ if ($logintype != "admin") {
                 }
                 ?>
                 <div class="d-flex flex-row pagination mt-2 text-dark">
-                  <a class="page mx-1 px-3 py-1 " href="?pagenum=1">First</a>
+
                   <?php
+                  if ($totalPages > 1) {
+                    echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=1">First</a>';
+                  }
+
                   if ($totalPages != 1) {
                     /* First we check if we are on page one. If we are then we don't need a link to 
                          the previous page or the first page so we do nothing. If we aren't then we
@@ -290,8 +294,12 @@ if ($logintype != "admin") {
                       }
                     }
                   }
+
+                  if ($totalPages > 1) {
+                    echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=' . $totalPages . '">Last</a>';
+                  }
                   ?>
-                  <a class="page mx-1 px-3 py-1 " href="?pagenum=<?php echo $totalPages ?>">Last</a>
+
                 </div>
 
               </div>

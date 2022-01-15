@@ -131,19 +131,18 @@ session_start();
           <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar">
             <ul class="navbar-nav ">
               <li class="nav-item ">
-                <a class="nav-link" style="color:white;text-decoration:none;" href="CETproj.html">Welcome <?php
-
-                                                                                                          if (isset($_SESSION['logintype'])) {
-
-                                                                                                            if ($_SESSION['firstname'] && $_SESSION['lastname']) {
-                                                                                                              $firstname = $_SESSION['firstname'];
-                                                                                                              $lastname = $_SESSION['lastname'];
-                                                                                                              echo "$firstname $lastname";
-                                                                                                            } ?>
+                <a class="nav-link" style="color:white;text-decoration:none;" href="CETproj.html">Welcome
                   <?php
-                                                                                                          } else {
-                                                                                                            echo ("Visitor");
-                                                                                                          }
+
+                  if (isset($_SESSION['logintype'])) {
+                    if ($_SESSION['firstname'] && $_SESSION['lastname']) {
+                      $firstname = $_SESSION['firstname'];
+                      $lastname = $_SESSION['lastname'];
+                      echo "$firstname $lastname";
+                    }
+                  } else {
+                    echo ("Visitor");
+                  }
                   ?></a>
               </li>
 
