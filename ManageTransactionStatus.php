@@ -63,7 +63,16 @@ if ($logintype != "admin") {
   <script src="assets/owlcarousel/owl.carousel.js"></script>
   <link rel="stylesheet" href="assets/css/animate.css" />
 
-
+  <script>
+  
+$(document).ready(function(){
+    $('.receivedbtn').click(function(event){
+        // your stuff here
+       
+        event.stopPropagation();
+    });
+});
+  </script>
 
   <style>
     html {
@@ -81,7 +90,7 @@ if ($logintype != "admin") {
 
 
 
-  <nav class="navbar-expand-md sticky-top py-1" style="background-color:#A31F1F;box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);box-shadow:   0px 0.1px 5px 0px white; z-index:5;">
+  <nav class="navbar-expand-md fixed-top py-1" style="background-color:#A31F1F;box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);box-shadow:   0px 0.1px 5px 0px white; z-index:5;">
     <div class="container" style="max-width:1150px;">
       <div class="d-flex">
 
@@ -89,7 +98,7 @@ if ($logintype != "admin") {
           <button onclick="Opensidenav()" class=" ml-2 mr-1 ml-md-0 d-sm-block d-md-none my-0 align-items-center d-flex " type="button" style="background-color:white;font-size:25px;border:1px solid #F2FCFF;border-radius:3px;">
             <span class="fas fa-bars my-1 opensidenav " style="background-color:white;color:black;line-height:1.1!important"></span>
           </button>
-          <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="./index.php" style="width:100%;">
+          <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="CETproj.html" style="width:100%;">
             <img class="d-flex justify-content-center " src="assets/images/puplogo.png" alt="Logo" style="height:38px;">
           </a>
         </div>
@@ -99,7 +108,7 @@ if ($logintype != "admin") {
           <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar">
             <ul class="navbar-nav ">
               <li class="nav-item ">
-                <a class="nav-link" style="color:white;text-decoration:none;" href="./index.php">Welcome <?php echo "$firstname $lastname!" ?></a>
+                <a class="nav-link" style="color:white;text-decoration:none;" href="CETproj.html">Welcome <?php echo "$firstname $lastname!" ?></a>
               </li>
 
 
@@ -114,10 +123,10 @@ if ($logintype != "admin") {
 
             <ul class="navbar-nav ">
               <li class="nav-item bg-sm-dark">
-                <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php">Manage Books</a>
+                <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php"><u>Manage Books</u></a>
               </li>
               <li class="nav-item bg-sm-dark">
-                <a class="nav-link navlinkbuttons" href="ManageTransactionReq.php"><u>Manage Transactions</u></a>
+                <a class="nav-link navlinkbuttons" href="ManageTransactionReq.php">Manage Transactions</a>
               </li>
               <span class="navline my-1 "></span>
               <li class="nav-item bg-sm-dark">
@@ -215,7 +224,7 @@ if ($logintype != "admin") {
         </div>
 
 
-        <div class="logincontainer browsecontainer  d-flex  pb-3 " style="width:99.2%;">
+        <div class="logincontainer browsecontainer  mt-5 d-flex  pb-3 " style="width:99.2%;">
           <!-- Nav tabs -->
 
 
@@ -227,42 +236,33 @@ if ($logintype != "admin") {
                 <?php
 
                 while ($request = mysqli_fetch_assoc($result)) {
-                  echo '<div class="card  my-3 productcard">
-                          <div class="row no-gutters d-inline-flex py-md-3 py-2 px-md-3 px-2">
-                            <div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimgcart" onclick="location.href=\'./Openbook.php?id=' . $request['book_id'] . '\';">
-                              <img class="cardimg " src="./uploads/images/' . $request['image'] . '" alt="Book image" style="height:100%;min-width:0;">
-                            </div>
-                            <div class="card-body p-0 d-flex productcardbodycart" onclick="location.href=\'./Openbook.php?id=' . $request['book_id'] . '\';">
-                              <div class="col pr-0">
-                                <h4 class="card-title itemname my-0  w-100 ">' . $request['title'] . '</h4>
-                                <div class="col pr-0">
-                                  <p class="card-text my-0 my-1">- ' . $request['author'] . '</p>
-                                  <p class="card-text itemdescription my-1  w-100">Borrower: ' . $request['borrower_fn'] . " " . $request['borrower_ln'] . '</p>
-                                  <p class="card-text itemdescription my-1  w-100">Status: ' . $request['status'] . '</p>';
+                  echo '<div class="card  my-3 productcard ">
+                  <div class="row no-gutters overflow-hidden d-inline-flex py-md-3 py-2 px-md-3 px-2">
+                    <div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimgcart" onclick="location.href=\'./Openbook.php?id=' . $request['book_id'] . '\';">
+                      <img class="cardimg " src="./uploads/images/' . $request['image'] . '" alt="Book image" style="height:100%;min-width:0;">
+                    </div>
+                    <div class="card-body p-0 d-flex productcardbodycart " onclick="location.href=\'./Openbook.php?id=' . $request['book_id'] . '\';">
+                      <div class="col pr-0">
+                        <h4 class="card-title itemname my-0  w-100 ">' . $request['title'] . '</h4>
+                        <p class="card-text my-0 my-1">- ' . $request['author'] . '</p>
+                        <p class="card-text itemdescription my-1  w-100">Borrower: ' . $request['borrower_fn'] . " " . $request['borrower_ln'] . '</p>
+                        <p class="card-text itemdescription my-1  w-100">Status: ' . $request['status'] ;
 
-                  //If request confirmed, calculate days to borrow the book by the student
-                  if ($request['status'] == "confirmed") {
-                    $today = new DateTime("Now");
-                    $deadline = new DateTime($request['date_of_process'] . '+ 5 days');
-                    $duration = date_diff($deadline, $today);
+                        //If request confirmed, calculate days of borrow duration
+                        if ($request['status'] == "confirmed") {
+                          $today = new DateTime("Now");
+                          $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
+                          $duration = date_diff($deadline, $today);
+						  
+                          echo '<button class="mx-2 receivedbtn"   > Book received </button></p>';
+                          echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
 
-                    echo '<p class="card-text itemdescription my-1  w-100">Days of Claim Remaining: ' . $duration->format('%a days') . '</p>';
-                  }
-
-                  if ($request['status'] == "borrowed") {
-                    $today = new DateTime("Now");
-                    $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
-                    $duration = date_diff($deadline, $today);
-
-                    echo '<p class="card-text itemdescription my-1  w-100">Days of Borrowed Remaining: ' . $duration->format('%a days') . '</p>';
-                  }
+                        }
                   echo '</div>
-                                <div class="col pr-0" style="background-color: red">
-                                test
-                              </div>
-                            </div>
-                          </div>
-                        </div>';
+                    </div>
+
+                  </div>
+                </div>';
                 }
                 ?>
                 <div class="d-flex flex-row pagination mt-2 text-dark">

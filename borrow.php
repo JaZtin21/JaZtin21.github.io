@@ -36,12 +36,12 @@ include('database.php');
   }
   else {
 	$currentStatus = "pending";  
-	$status = "cancelled";
+	
 
-	$query = "Update book_requests SET status = ?  WHERE borrower_id = ? && book_id = ? && status = ? ";
+	$query = "DELETE FROM book_requests WHERE borrower_id = ? && book_id = ? && status = ? ";
 
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "ssss", $status, $user_id, $book_id, $currentStatus );
+    mysqli_stmt_bind_param($stmt, "sss",  $user_id, $book_id, $currentStatus );
     mysqli_stmt_execute($stmt);
   }
 

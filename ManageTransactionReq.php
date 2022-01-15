@@ -73,14 +73,23 @@ if ($logintype != "admin") {
       height: calc(100% - 32px);
     }
   </style>
-
+  <script>
+  
+$(document).ready(function(){
+    $('.chkbtn').click(function(event){
+        // your stuff here
+       
+        event.stopPropagation();
+    });
+});
+  </script>
 </head>
 
 <body style="background-color:white;background-size:cover;background-attachment:fixed;">
 
 
 
-  <nav class="navbar-expand-md sticky-top py-1" style="background-color:#A31F1F;box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);box-shadow:   0px 0.1px 5px 0px white; z-index:5;">
+  <nav class="navbar-expand-md fixed-top py-1 " style="background-color:#A31F1F;box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);box-shadow:   0px 0.1px 5px 0px white; z-index:5;">
     <div class="container" style="max-width:1150px;">
       <div class="d-flex">
 
@@ -88,7 +97,7 @@ if ($logintype != "admin") {
           <button onclick="Opensidenav()" class=" ml-2 mr-1 ml-md-0 d-sm-block d-md-none my-0 align-items-center d-flex " type="button" style="background-color:white;font-size:25px;border:1px solid #F2FCFF;border-radius:3px;">
             <span class="fas fa-bars my-1 opensidenav " style="background-color:white;color:black;line-height:1.1!important"></span>
           </button>
-          <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="./index.php" style="width:100%;">
+          <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="CETproj.html" style="width:100%;">
             <img class="d-flex justify-content-center " src="assets/images/puplogo.png" alt="Logo" style="height:38px;">
           </a>
         </div>
@@ -98,7 +107,7 @@ if ($logintype != "admin") {
           <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar">
             <ul class="navbar-nav ">
               <li class="nav-item ">
-                <a class="nav-link" style="color:white;text-decoration:none;" href="./index.php">Welcome <?php echo "$firstname $lastname" ?>!</a>
+                <a class="nav-link" style="color:white;text-decoration:none;" href="CETproj.html">Welcome <?php echo "$firstname $lastname" ?>!</a>
               </li>
 
 
@@ -215,7 +224,7 @@ if ($logintype != "admin") {
         </div>
 
 
-        <div class="logincontainer browsecontainer  d-flex  pb-3 " style="width:99.2%;">
+        <div class="logincontainer browsecontainer  mt-5 d-flex  pb-3 " style="width:99.2%;">
           <!-- Nav tabs -->
 
 
@@ -230,8 +239,8 @@ if ($logintype != "admin") {
                     </label>
                   </div>
                   <div class="">
-                    <input class="borrowa" type="submit" name="AcceptRequests" value="Accept Borrow Request" class="requestbutton px-2 py-1">
-                    <input class="borrowa" type="submit" name="RejectRequests" value="Reject Borrow Request" class="requestbutton px-2 py-1">
+                    <input class="borrowa" type="submit" name="AcceptRequests" value="Accept Request" class="requestbutton px-2 py-1">
+                    <input class="borrowa" type="submit" name="RejectRequests" value="Reject Request" class="requestbutton px-2 py-1">
                   </div>
 
                 </div>
@@ -250,13 +259,15 @@ if ($logintype != "admin") {
                           <p class="card-text itemdescription my-1  w-100">Borrower: ' . $request['borrower_fn'] . " " . $request['borrower_ln'] . '</p>
                         </div>
                       </div>
-                      <div class="col d-flex  align-items-center justify-content-center productcardimgcheck">
+                      <div class="col d-flex mx-auto  align-items-center justify-content-center productcardimgcheck">
                         <div class="form-check-inline mx-0 my-0 px-auto h-100">
                           <label class="form-check-label mt-2 ">
                             <input type="checkbox" name="requestId[]" class="form-check-input mx-0 my-0" value="' . $request['id'] . '">
                           </label>
-                          <div class="col d-flex  mt-1 align-items-center justify-content-center productcardimgcheck">
-                            <i class="fas fa-times"></i>
+                          <div class="px-1 px-md-2 d-block  align-items-center justify-content-center productcardimgcheck">
+                            <button  class=" fas my-2 fa-check chkbtn d-flex align-items-center justify-content-center" style="width:80%;"></button >
+							<button  class=" fas my-2 fa-times chkbtn d-flex align-items-center justify-content-center" style="width:80%;"></button >
+							
                           </div>
                         </div>
                       </div>
