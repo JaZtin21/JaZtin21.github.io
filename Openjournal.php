@@ -40,7 +40,7 @@ include('database.php');
   <button onclick="Opensidenav()" class=" ml-2 mr-1 ml-md-0 d-sm-block d-md-none my-0 align-items-center d-flex " type="button"  style="background-color:white;font-size:25px;border:1px solid #F2FCFF;border-radius:3px;">   
     <span class="fas fa-bars my-1 opensidenav " style="background-color:white;color:black;line-height:1.1!important" ></span>
   </button> 
- <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="CETproj.html" style="width:100%;">
+ <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="./index.php" style="width:100%;">
     <img class="d-flex justify-content-center " src="assets/images/puplogo.png" alt="Logo" style="height:38px;">
   </a>
 </div>
@@ -50,7 +50,7 @@ include('database.php');
 <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar"   >
     <ul class="navbar-nav "  >
       <li class="nav-item ">
-        <a class="nav-link"  style="color:white;text-decoration:none;" href="CETproj.html">Welcome 
+        <a class="nav-link"  style="color:white;text-decoration:none;" href="./index.php">Welcome 
 
 <?php 
 		
@@ -210,7 +210,7 @@ while($row = mysqli_fetch_assoc($bookselect)) {
 ?>
 <div class="featuredbox d-flex mt-3 bg-light">
 <div class="d-inline-flex w-100 h-100" style="position:relative;">
-<div class="borrowbutton mx-3 my-3 px-2 py-1">  <a class="borrowa px-2 py-1" href="CETproj.html">Borrow</a></div>
+<div class="borrowbutton mx-3 my-3 px-2 py-1">  <a class="borrowa px-2 py-1" href="./index.php">Borrow</a></div>
 <div class="bookimagecontainer justify-content-center d-flex h-100 ">
 
 <div class="bookimagehome  px-2 pt-2">
