@@ -12,6 +12,7 @@ function checkAll(checkBox) {
 }
 
 $(document).ready(function () {
+
   $("#search").keyup(function () {
     var title = $("#search").val();
     if (title === '') {

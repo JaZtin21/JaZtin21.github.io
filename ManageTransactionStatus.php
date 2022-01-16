@@ -47,7 +47,7 @@ if ($logintype != "admin") {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="./styles/CETproj.css" />
-  <script src="./scripts/script.js"></script>
+
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
@@ -62,16 +62,15 @@ if ($logintype != "admin") {
   <script src="assets/vendors/jquery.min.js"></script>
   <script src="assets/owlcarousel/owl.carousel.js"></script>
   <link rel="stylesheet" href="assets/css/animate.css" />
-
+  <script src="./scripts/script.js"></script>
   <script>
-  
-$(document).ready(function(){
-    $('.receivedbtn').click(function(event){
+    $(document).ready(function() {
+      $('.receivedbtn').click(function(event) {
         // your stuff here
-       
+
         event.stopPropagation();
+      });
     });
-});
   </script>
 
   <style>
@@ -236,33 +235,42 @@ $(document).ready(function(){
                 <?php
 
                 while ($request = mysqli_fetch_assoc($result)) {
-                  echo '<div class="card  my-3 productcard ">
-                  <div class="row no-gutters overflow-hidden d-inline-flex py-md-3 py-2 px-md-3 px-2">
-                    <div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimgcart" onclick="location.href=\'./Openbook.php?id=' . $request['book_id'] . '\';">
-                      <img class="cardimg " src="./uploads/images/' . $request['image'] . '" alt="Book image" style="height:100%;min-width:0;">
+                  echo '<form method="post" action="./scripts/request.php">
+                    <div class="card  my-3 productcard ">
+                      <div class="row no-gutters overflow-hidden d-inline-flex py-md-3 py-2 px-md-3 px-2">
+                        <div class="col d-flex mx-auto h-100 align-items-center justify-content-center productcardimgcart" onclick="location.href=\'./Openbook.php?id=' . $request['book_id'] . '\';">
+                          <img class="cardimg " src="./uploads/images/' . $request['image'] . '" alt="Book image" style="height:100%;min-width:0;">
+                        </div>
+                        <div class="card-body p-0 d-flex productcardbodycart " onclick="location.href=\'./Openbook.php?id=' . $request['book_id'] . '\';">
+                          <div class="col pr-0">
+                            <h4 class="card-title itemname my-0  w-100 ">' . $request['title'] . '</h4>
+                            <p class="card-text my-0 my-1">- ' . $request['author'] . '</p>
+                            <p class="card-text itemdescription my-1  w-100">Borrower: ' . $request['borrower_fn'] . " " . $request['borrower_ln'] . '</p>
+                            <p class="card-text itemdescription my-1  w-100">Status: ' . $request['status'];
+
+                            //If request confirmed, calculate days of borrow duration
+                            if ($request['status'] == "confirmed") {
+                              $today = new DateTime("Now");
+                              $deadline = new DateTime($request['date_of_process'] . '+ 5 days');
+                              $duration = date_diff($deadline, $today);
+                            
+                              echo ' <button name="book_borrowed" value=' . $request['id'] .  ' class="mx-2 receivedbtn"   >Book is borrowed</button> </p>';
+                              echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
+                            }
+
+                            if ($request['status'] == "borrowed") {
+                              $today = new DateTime("Now");
+                              $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
+                              $duration = date_diff($deadline, $today);
+
+                              echo ' <button name="book_returned" value=' . $request['id'] .  ' class="mx-2 receivedbtn"   >Book is returned</button> </p>';
+                              echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
+                            }
+                          echo '</div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="card-body p-0 d-flex productcardbodycart " onclick="location.href=\'./Openbook.php?id=' . $request['book_id'] . '\';">
-                      <div class="col pr-0">
-                        <h4 class="card-title itemname my-0  w-100 ">' . $request['title'] . '</h4>
-                        <p class="card-text my-0 my-1">- ' . $request['author'] . '</p>
-                        <p class="card-text itemdescription my-1  w-100">Borrower: ' . $request['borrower_fn'] . " " . $request['borrower_ln'] . '</p>
-                        <p class="card-text itemdescription my-1  w-100">Status: ' . $request['status'] ;
-
-                        //If request confirmed, calculate days of borrow duration
-                        if ($request['status'] == "confirmed") {
-                          $today = new DateTime("Now");
-                          $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
-                          $duration = date_diff($deadline, $today);
-						  
-                          echo '<button class="mx-2 receivedbtn"   > Book received </button></p>';
-                          echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
-
-                        }
-                  echo '</div>
-                    </div>
-
-                  </div>
-                </div>';
+                  </form>';
                 }
                 ?>
                 <div class="d-flex flex-row pagination mt-2 text-dark">
@@ -376,6 +384,17 @@ $(document).ready(function(){
 
   </div>
 
+  <script>
+    function changeStatus(id) {
+      $.ajax({
+        type: "POST",
+        url: "./scripts/request.php",
+        data: {
+          id: id
+        }
+      })
+    }
+  </script>
 
 </body>
 

@@ -74,14 +74,13 @@ if ($logintype != "admin") {
     }
   </style>
   <script>
-  
-$(document).ready(function(){
-    $('.chkbtn').click(function(event){
+    $(document).ready(function() {
+      $('.chkbtn').click(function(event) {
         // your stuff here
-       
+
         event.stopPropagation();
+      });
     });
-});
   </script>
 </head>
 
@@ -262,12 +261,11 @@ $(document).ready(function(){
                       <div class="col d-flex mx-auto  align-items-center justify-content-center productcardimgcheck">
                         <div class="form-check-inline mx-0 my-0 px-auto h-100">
                           <label class="form-check-label mt-2 ">
-                            <input type="checkbox" name="requestId[]" class="form-check-input mx-0 my-0" value="' . $request['id'] . '">
+                            <input type="checkbox" name="requestsId[]" class="form-check-input mx-0 my-0" value="' . $request['id'] . '">
                           </label>
                           <div class="px-1 px-md-2 d-block  align-items-center justify-content-center productcardimgcheck">
-                            <button  class=" fas my-2 fa-check chkbtn d-flex align-items-center justify-content-center" style="width:80%;"></button >
-							<button  class=" fas my-2 fa-times chkbtn d-flex align-items-center justify-content-center" style="width:80%;"></button >
-							
+                            <button name="AcceptRequest" value=' . $request['id'] . ' class=" fas my-2 fa-check chkbtn d-flex align-items-center justify-content-center" style="width:80%;"></button>
+							              <button name="RejectRequest" value="' . $request['id'] . '" class=" fas my-2 fa-times chkbtn d-flex align-items-center justify-content-center" style="width:80%;"></button>
                           </div>
                         </div>
                       </div>

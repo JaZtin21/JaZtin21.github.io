@@ -102,87 +102,6 @@ include('database.php');
  </script>								   
 </head>
 
-<<<<<<< HEAD
-<body style="background-color:white;background-size:cover;background-attachment:fixed;">
-
-
-
-  <nav class="navbar-expand-md sticky-top py-1" style="background-color:#A31F1F;box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);box-shadow:   0px 0.1px 5px 0px white; z-index:5;">
-    <div class="container" style="max-width:1150px;">
-      <div class="d-flex">
-
-        <div class="d-inline-flex align-items-center " style="">
-          <button onclick="Opensidenav()" class=" ml-2 mr-1 ml-md-0 d-sm-block d-md-none my-0 align-items-center d-flex " type="button" style="background-color:white;font-size:25px;border:1px solid #F2FCFF;border-radius:3px;">
-            <span class="fas fa-bars my-1 opensidenav " style="background-color:white;color:black;line-height:1.1!important"></span>
-          </button>
-          <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="CETproj.html" style="width:100%;">
-            <img class="d-flex justify-content-center " src="assets/images/puplogo.png" alt="Logo" style="height:38px;">
-          </a>
-        </div>
-
-
-        <div class="d-flex " style="">
-          <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar">
-            <ul class="navbar-nav ">
-              <li class="nav-item ">
-                <a class="nav-link" style="color:white;text-decoration:none;" href="CETproj.html">Welcome
-                  <?php
-
-                  if (isset($_SESSION['logintype'])) {
-                    if ($_SESSION['firstname'] && $_SESSION['lastname']) {
-                      $firstname = $_SESSION['firstname'];
-                      $lastname = $_SESSION['lastname'];
-                      echo "$firstname $lastname";
-                    }
-                  } else {
-                    echo ("Visitor");
-                  }
-                  ?></a>
-              </li>
-
-
-
-            </ul>
-          </div>
-        </div>
-
-        <div class="collapse navbar-collapse ml-1   " id="collapsibleNavbar">
-          <div class=" d-flex ml-auto " style="">
-            <ul class="navbar-nav ">
-              <?php
-              if (isset($_SESSION['logintype'])) {
-                if ($_SESSION['logintype'] === 'admin') { ?>
-
-                  <li class="nav-item bg-sm-dark">
-                    <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php">Manage Books</a>
-                  </li>
-                  <li class="nav-item bg-sm-dark">
-                    <a class="nav-link navlinkbuttons" href="ManageTransactionreq.php">Manage Transactions</a>
-                  </li>
-
-                <?php
-                } else if ($_SESSION['logintype'] === 'student') {
-                ?>
-                  <li class="nav-item bg-sm-dark">
-                    <a class="nav-link navlinkbuttons" href="bookmarks.php">Bookmarks</a>
-                  </li>
-                  <li class="nav-item bg-sm-dark">
-                    <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
-                  </li>
-              <?php
-                }
-              }
-              ?>
-              <span class="navline my-1 "></span>
-
-              <li class="nav-item bg-sm-dark">
-                <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Other Resources</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navlinkbuttons" href="#" data-toggle="modal" data-target="#myModal">Contact Us</a>
-              </li>
-            </ul>
-=======
 <body style="background-color:white;background-size:cover;background-attachment:fixed;" >
 
 
@@ -255,7 +174,6 @@ if (isset($_SESSION['logintype'])){
 }
 ?>
  <span class="navline my-1 " ></span>
->>>>>>> a434ba2e15a7858d763520d4d910e119b42247cb
 
       <li class="nav-item bg-sm-dark">
         <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Other Resources</a>
