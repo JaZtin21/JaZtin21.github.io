@@ -9,6 +9,14 @@ if (isset($_GET['pagenum'])) {
   $pageNum = 1;
 }
 
+$sorter = $_GET['value']??'';
+if ($sorter == 'all' || $sorter == ''){
+	
+}
+							 
+									   
+
+
 $requestsPerPage = 4;
 $offset = ($pageNum - 1) * $requestsPerPage;
 
@@ -19,7 +27,14 @@ if (isset($_SESSION)) {
 }
 
 //Get total rows and pages for pagination
-$query = "select count(*) from books inner join book_requests on books.id = book_requests.book_id";
+									   
+if ($sorter == 'all' || $sorter == ''){
+	$query = "select count(*) from books inner join book_requests on books.id = book_requests.book_id   ";
+	
+}else {$query = "select count(*) from books inner join book_requests on books.id = book_requests.book_id WHERE status='$sorter' ";}
+
+																																   
+
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -27,7 +42,13 @@ $totalRows = mysqli_fetch_array($result)[0];
 $totalPages = ceil($totalRows / $requestsPerPage);
 
 //Get all transaction records
-$query = "select * from books inner join book_requests on books.id = book_requests.book_id order by date_of_request limit $offset, $requestsPerPage ;";
+if ($sorter == 'all' || $sorter == ''){
+	$query = "select * from books inner join book_requests on books.id = book_requests.book_id  order by date_of_request DESC limit $offset, $requestsPerPage ;";
+}else{
+	$query = "select * from books inner join book_requests on books.id = book_requests.book_id WHERE status='$sorter' order by date_of_request DESC limit $offset, $requestsPerPage ;";
+}																																											
+ 
+
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -64,13 +85,98 @@ if ($logintype != "admin") {
   <link rel="stylesheet" href="assets/css/animate.css" />
   <script src="./scripts/script.js"></script>
   <script>
-    $(document).ready(function() {
-      $('.receivedbtn').click(function(event) {
-        // your stuff here
+  
 
+  
+  
+  	function checkAll(checkbox) {
+    var checkboxes = document.getElementsByName('check');
+	var checkeditem = document.querySelector('.form-check-input:checked').value;
+	
+	
+		
+    checkboxes.forEach((item) => {
+		
+        if (item !== checkbox) item.checked = false;
+	
+	
+    })
+	
+
+
+
+
+
+
+	
+	
+	
+	
+}
+  function onChange(element) {
+    	
+  var inputs = document.querySelectorAll('input[type="checkbox"]');
+  var arrData = [];
+  // For each inputs...
+  inputs.forEach(function(input){
+    // ... save what you want (but 'ID' and 'checked' values are necessary)
+    arrData.push({ id: input.id, checked: input.checked });
+  });
+  // Save in localStorage
+  localStorage.setItem('inputs', JSON.stringify(arrData));
+
+  console.log(JSON.stringify(arrData));
+  // [
+  //   {
+  //     'id': 'ch1',
+  //     'checked': false  // or true
+  //   },
+  //   ... and so on
+  // ]
+		
+		
+		const urlParams = new URLSearchParams(window.location.search);
+
+        urlParams.set('value', element.value);
+        urlParams.set('pagenum','1')
+        window.location.search = urlParams;
+		
+		
+		
+		
+		
+		
+    }
+
+
+
+	
+$(document).ready(function(){
+	
+	
+var wat= JSON.parse(window.localStorage.getItem('inputs'));
+
+for(var p in wat)
+    {
+    
+      {
+         
+		 $('#'+ wat[p].id).prop('checked', wat[p].checked);
+      }
+    }
+
+	
+
+	
+    $('.receivedbtn').click(function(event){
+        // your stuff here
+       
         event.stopPropagation();
-      });
+		 
     });
+	
+
+});
   </script>
 
   <style>
@@ -230,6 +336,36 @@ if ($logintype != "admin") {
           <!-- Tab panes -->
           <div class="tab-content justify-content-center">
             <div id="home" class="container tab-pane active mt-3">
+				<div class="inline-flex w-100 ">
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" id="ch1" onclick="checkAll(this)" onchange="onChange(this)" value="all" name="check" class="form-check-input"> All
+                    </label>
+                  </div>
+				  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" id="ch2" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="pending" class="form-check-input"> Pending
+                    </label>
+                  </div>
+				  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" id="ch3" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="confirmed" class="form-check-input"> Confirmed
+                    </label>
+                  </div>
+				  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" id="ch4" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="received" class="form-check-input"> Received
+                    </label>
+                  </div>
+				  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" id="ch5" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="returned" class="form-check-input"> Returned
+                    </label>
+                  </div>
+                
+
+                </div>					  
+												 
 
               <div id="target-content" class="productsitemlist   mt-2 mx-0 mx-md-0" style="">
                 <?php
@@ -258,10 +394,14 @@ if ($logintype != "admin") {
                               echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
                             }
 
+																				 
                             if ($request['status'] == "borrowed") {
                               $today = new DateTime("Now");
                               $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
                               $duration = date_diff($deadline, $today);
+		
+																								  
+																																		   
 
                               echo ' <button name="book_returned" value=' . $request['id'] .  ' class="mx-2 receivedbtn"   >Book is returned</button> </p>';
                               echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
@@ -271,13 +411,16 @@ if ($logintype != "admin") {
                       </div>
                     </div>
                   </form>';
+						
+						
                 }
                 ?>
                 <div class="d-flex flex-row pagination mt-2 text-dark">
-
+<?php if ($totalPages != 0){ ?>
+																										   
                   <?php
                   if ($totalPages > 1) {
-                    echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=1">First</a>';
+                    echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=1&value='.$sorter.'">First</a>';
                   }
 
                   if ($totalPages != 1) {
@@ -288,7 +431,7 @@ if ($logintype != "admin") {
                       // Render clickable number links that should appear on the left of the target page number
                       for ($i = $pageNum - 2; $i < $pageNum; $i++) {
                         if ($i > 0) {
-                          echo '<a class="page mx-1 px-3 py-1 " href="' . $_SERVER['PHP_SELF'] . '?pagenum=' . $i . '">' . $i . '</a>';
+                                 echo '<a class="page mx-1 px-3 py-1 " href="' . $_SERVER['PHP_SELF'] . '?pagenum=' . $i . '&value='.$sorter.'">' . $i . '</a>';
                         }
                       }
                     }
@@ -296,18 +439,18 @@ if ($logintype != "admin") {
                     echo '<a class="page mx-1 px-3 py-1 " style = "background-color: #A31F1F">' . $pageNum . '</a>';
                     // Render clickable number links that should appear on the right of the target page number
                     for ($i = $pageNum + 1; $i <= $totalPages; $i++) {
-                      echo '<a class="page mx-1 px-3 py-1 disabled" href="' . $_SERVER['PHP_SELF'] . '?pagenum=' . $i . '">' . $i . '</a>';
+                   echo '<a class="page mx-1 px-3 py-1 disabled" href="' . $_SERVER['PHP_SELF'] . '?pagenum=' . $i . '&value='.$sorter.'">' . $i . '</a>';
                       if ($i >= $pageNum + 2) {
                         break;
                       }
                     }
                   }
 
-                  if ($totalPages > 1) {
-                    echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=' . $totalPages . '">Last</a>';
-                  }
                   ?>
+                  <a class="page mx-1 px-3 py-1 " href="?pagenum=<?php echo $totalPages."&value=$sorter" ?>">Last</a>
+				<?php }else {echo ('no data found');} ?>
 
+											  
                 </div>
 
               </div>
