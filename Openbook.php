@@ -124,7 +124,7 @@ include('database.php');
 <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar"   >
     <ul class="navbar-nav "  >
       <li class="nav-item ">
-        <a class="nav-link"  style="color:white;text-decoration:none;" href="CETproj.html">Welcome <?php 
+        <a class="nav-link"  style="color:white;text-decoration:none;" href="index.php">Welcome <?php 
 		
 if (isset($_SESSION['logintype'])){
    
@@ -143,6 +143,7 @@ if (isset($_SESSION['logintype'])){
 
 
     </ul>
+
 </div>
 </div>
 
@@ -157,7 +158,7 @@ if (isset($_SESSION['logintype'])){
         <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php">Manage Books</a>
       </li>	
 	   <li class="nav-item bg-sm-dark">
-        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Manage Transactions</a>
+        <a class="nav-link navlinkbuttons" href="ManageTransactionReq.php">Manage Transactions</a>
       </li>	 
 
 <?php       
@@ -313,7 +314,7 @@ $bookm= $row_db[0]??'';
 
 
 
-     if ($bookm == 0 && $useid != "" ) {   
+     if ($bookm == 0 && $useid != "" && $_SESSION['logintype'] === 'student') {   
 			    
 			 echo " <a class='button borrowa px-2 py-1 mx-1' method = 'Like'  user_id = ".$useid." book_id = ".$id."  style='color:#white;'><i class='fas fa-bookmark'  ></i></a> ";
 		
@@ -330,7 +331,7 @@ $bookb= $row_db[0]??'';
 
 
 
-     if ($bookb == 0 && $useid != "" ) {   
+     if ($bookb == 0 && $useid != "" && $_SESSION['logintype'] === 'student' ) {   
 			    
 			 echo " <a id='borrowbtn' class='borrowa  px-2 py-1' method = 'Borrowing'  user_id = ".$useid." book_id = ".$id." onclick='show_confirm()' >Borrow</a> ";
 		

@@ -29,7 +29,37 @@ session_start();
 </head>
 
 <body style="background-color:white;background-size:cover;background-attachment:fixed;">
-
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog ">
+		<div class="modal-content my-5 modal-loginform"  autocomplete="false" >
+			<form action="confirmation.php" method="post" autocomplete="false" autocomplete="off" >
+				<div class="modal-header modalhome align-items-center">				
+					<h4 class="modal-title">Change Password</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: #F8ECFF;opacity:1;outline:none;" >&times;</button>
+				</div>
+				<div class="modal-body">				
+					<div class="form-group">
+						<label>Old Password</label>
+						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
+					</div>
+					<div class="form-group">
+						<div class="clearfix">
+							<label>New Password</label>
+							
+						</div>
+						
+						<input type="password" class="form-control" required="required" autocomplete="off"  autocomplete="false">
+					</div>
+				</div>
+				<div class="modal-footer justify-content-end">
+				
+					<div><div class="btn btn-dark "   >Change Password</div>
+				
+				</div></div>
+			</form>
+		</div>
+	</div>
+</div> 
 
 
   <nav class="navbar-expand-md sticky-top py-1" style="background-color:#A31F1F;box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);box-shadow:   0px 0.1px 5px 0px white; z-index:5;">
@@ -71,6 +101,15 @@ session_start();
 
 
             </ul>
+			<div class="dropdown">
+  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ 
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">Change Password</a>
+
+  </div>
+</div>
           </div>
         </div>
 
@@ -99,7 +138,7 @@ session_start();
                     <a class="nav-link navlinkbuttons" href="bookmarks.php">Bookmarks</a>
                   </li>
                   <li class="nav-item bg-sm-dark">
-                    <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Borrow Records</a>
+                    <a class="nav-link navlinkbuttons" href="BorrowRecords.php">Borrow Records</a>
                   </li>
               <?php
                 }
