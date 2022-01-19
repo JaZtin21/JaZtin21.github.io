@@ -277,6 +277,7 @@ if ($logintype != "admin") {
                   ?>
 
                   <div class="d-flex flex-row pagination mt-2 text-dark">
+				  <?php if ($totalPages != 0){ ?>
                     <?php
                     if ($totalPages > 1) {
                       echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=1">First</a>';
@@ -309,6 +310,7 @@ if ($logintype != "admin") {
                       echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=' . $totalPages . '">Last</a>';
                     }
                     ?>
+					<?php }else {echo ('no data found');} ?>
                   </div>
 
                 </div>

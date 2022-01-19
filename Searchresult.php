@@ -41,7 +41,7 @@ include('database.php');
   <button onclick="Opensidenav()" class=" ml-2 mr-1 ml-md-0 d-sm-block d-md-none my-0 align-items-center d-flex " type="button"  style="background-color:white;font-size:25px;border:1px solid #F2FCFF;border-radius:3px;">   
     <span class="fas fa-bars my-1 opensidenav " style="background-color:white;color:black;line-height:1.1!important" ></span>
   </button> 
- <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="./index.php" style="width:100%;">
+ <a class="navbar-brand justify-content-center py-0 my-0 px-0 mr-1 d-none d-md-block" href="CETproj.html" style="width:100%;">
     <img class="d-flex justify-content-center " src="assets/images/puplogo.png" alt="Logo" style="height:38px;">
   </a>
 </div>
@@ -51,7 +51,7 @@ include('database.php');
 <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar"   >
     <ul class="navbar-nav "  >
       <li class="nav-item ">
-        <a class="nav-link"  style="color:white;text-decoration:none;" href="./index.php">Welcome 
+        <a class="nav-link"  style="color:white;text-decoration:none;" href="CETproj.html">Welcome 
 <?php 
 		
 if (isset($_SESSION['logintype'])){
@@ -85,7 +85,7 @@ if (isset($_SESSION['logintype'])){
         <a class="nav-link navlinkbuttons" href="ManageBookspageAdd.php">Manage Books</a>
       </li>	
 	   <li class="nav-item bg-sm-dark">
-        <a class="nav-link navlinkbuttons" href="./ManageTransactionReq.php">Manage Transactions</a>
+        <a class="nav-link navlinkbuttons" href="CETprojCartpage.html">Manage Transactions</a>
       </li>	 
 
 <?php       
