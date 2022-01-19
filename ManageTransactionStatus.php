@@ -400,9 +400,6 @@ for(var p in wat)
                               $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
                               $duration = date_diff($deadline, $today);
 		
-																								  
-																																		   
-
                               echo ' <button name="book_returned" value=' . $request['id'] .  ' class="mx-2 receivedbtn"   >Book is returned</button> </p>';
                               echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
                             }
