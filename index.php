@@ -29,44 +29,45 @@ session_start();
 </head>
 
 <body style="background-color:white;background-size:cover;background-attachment:fixed;">
-<div id="myModal" class="modal fade">
-	<div class="modal-dialog ">
-		<div class="modal-content my-5 modal-loginform"  autocomplete="false" >
-			<form action="confirmation.php" method="post" autocomplete="false" autocomplete="off" >
-				<div class="modal-header modalhome align-items-center">				
-					<h4 class="modal-title">Change Password</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: #F8ECFF;opacity:1;outline:none;" >&times;</button>
-				</div>
-				<div class="modal-body">				
-					<div class="form-group">
-						<label>Old Password</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-					<div class="form-group">
-						<div class="clearfix">
-							<label>New Password</label>
-							
-						</div>
-						
-						<input type="password" class="form-control" required="required" autocomplete="off"  autocomplete="false">
-					</div>
-				</div>
-				<div class="modal-footer justify-content-end">
-				
-					<div><div class="btn btn-dark "   >Change Password</div>
-				
-				</div></div>
-			</form>
-		</div>
-	</div>
-</div> 
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog ">
+      <div class="modal-content my-5 modal-loginform" autocomplete="false">
+        <form action="./scripts/changePass.php" method="post" autocomplete="false" autocomplete="off">
+          <div class="modal-header modalhome align-items-center">
+            <h4 class="modal-title">Change Password</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: #F8ECFF;opacity:1;outline:none;">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Old Password</label>
+              <input type="password" name="oldPass" class="form-control" required="required" autocomplete="off" autocomplete="false">
+            </div>
+            <div class="form-group">
+              <div class="clearfix">
+                <label>New Password</label>
+
+              </div>
+
+              <input type="password" name="newPass" class="form-control" required="required" autocomplete="off" autocomplete="false">
+            </div>
+          </div>
+          <div class="modal-footer justify-content-end">
+            <div>
+              <input type="submit" class="btn btn-dark " value="Change Password">
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 
   <nav class="navbar-expand-md sticky-top py-1" style="background-color:#A31F1F;box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);box-shadow:   0px 0.1px 5px 0px white; z-index:5;">
     <div class="container" style="max-width:1150px;">
       <div class="d-flex">
 
-        <div class="d-inline-flex align-items-center " style="">
+        <div class="d-inline-flex align-items-center ">
           <button onclick="Opensidenav()" class=" ml-2 mr-1 ml-md-0 d-sm-block d-md-none my-0 align-items-center d-flex " type="button" style="background-color:white;font-size:25px;border:1px solid #F2FCFF;border-radius:3px;">
             <span class="fas fa-bars my-1 opensidenav " style="background-color:white;color:black;line-height:1.1!important"></span>
           </button>
@@ -76,7 +77,7 @@ session_start();
         </div>
 
 
-        <div class="d-flex " style="">
+        <div class="d-flex ">
           <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar">
             <ul class="navbar-nav ">
               <li class="nav-item ">
@@ -101,21 +102,21 @@ session_start();
 
 
             </ul>
-			<div class="dropdown">
-  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
- 
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">Change Password</a>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-  </div>
-</div>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">Change Password</a>
+
+              </div>
+            </div>
           </div>
         </div>
 
 
         <div class="collapse navbar-collapse ml-1   " id="collapsibleNavbar">
-          <div class=" d-flex ml-auto " style="">
+          <div class=" d-flex ml-auto ">
 
 
             <ul class="navbar-nav ">
@@ -239,7 +240,7 @@ session_start();
 
       <div class="rightblock d-block ml-0 ml-lg-3 mt-0">
         <div class="searchbox d-flex align-items-center mt-2 d-block d-lg-none">
-          <div class="input-group ml-2 d-inline-flex" style="">
+          <div class="input-group ml-2 d-inline-flex">
             <i class="fas fa-search mr-2 align-items-center  my-auto"></i>
             <input type="text" class="form-control my-auto" placeholder="Search " style="border:0;height:30px;padding-left:2px; outline:none;box-shadow:none;">
             <div class="input-group-append">

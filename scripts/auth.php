@@ -28,6 +28,7 @@ if (!password_verify($password, $current_user['password'])) {
     $_SESSION['firstname'] = $current_user['firstname'];
     $_SESSION['lastname'] = $current_user['lastname'];
     $_SESSION['logintype'] = $current_user['type'];
+    $_SESSION['userId'] = $current_user['id'];
 
     if ($current_user['type'] == 'admin') {
         header('Location: ../');

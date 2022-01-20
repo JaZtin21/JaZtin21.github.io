@@ -34,10 +34,10 @@ if (isset($_POST['book_returned'])) {
     $returnDate = mysqli_fetch_row($result)[0];
 
     $today = new DateTime("now");
-    $timezone = new DateTimeZone('Asia/Tokyo');
+    $timezone = new DateTimeZone('Asia/Singapore');
     $today->setTimezone($timezone);
     
-    if ($returnDate > $today) {
+    if (strtotime($returnDate) > strtotime($today->format("Y-m-d H:i:s"))) {
         //RETURN OF THE BOOK IS LATE
         $isOnTime = false;
     } else {
@@ -56,6 +56,7 @@ if (isset($_POST['book_returned'])) {
         exit();
     } else{
         header("Location: ../ManageTransactionStatus.php?success=true");
+        exit();
     }
 }
 

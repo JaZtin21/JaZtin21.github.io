@@ -9,12 +9,11 @@ if (isset($_GET['pagenum'])) {
   $pageNum = 1;
 }
 
-$sorter = $_GET['value']??'';
-if ($sorter == 'all' || $sorter == ''){
-	
+$sorter = $_GET['value'] ?? '';
+if ($sorter == 'all' || $sorter == '') {
 }
-							 
-									   
+
+
 
 
 $requestsPerPage = 4;
@@ -27,13 +26,14 @@ if (isset($_SESSION)) {
 }
 
 //Get total rows and pages for pagination
-									   
-if ($sorter == 'all' || $sorter == ''){
-	$query = "select count(*) from books inner join book_requests on books.id = book_requests.book_id   ";
-	
-}else {$query = "select count(*) from books inner join book_requests on books.id = book_requests.book_id WHERE status='$sorter' ";}
 
-																																   
+if ($sorter == 'all' || $sorter == '') {
+  $query = "select count(*) from books inner join book_requests on books.id = book_requests.book_id   ";
+} else {
+  $query = "select count(*) from books inner join book_requests on books.id = book_requests.book_id WHERE status='$sorter' ";
+}
+
+
 
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_execute($stmt);
@@ -42,12 +42,12 @@ $totalRows = mysqli_fetch_array($result)[0];
 $totalPages = ceil($totalRows / $requestsPerPage);
 
 //Get all transaction records
-if ($sorter == 'all' || $sorter == ''){
-	$query = "select * from books inner join book_requests on books.id = book_requests.book_id  order by date_of_request DESC limit $offset, $requestsPerPage ;";
-}else{
-	$query = "select * from books inner join book_requests on books.id = book_requests.book_id WHERE status='$sorter' order by date_of_request DESC limit $offset, $requestsPerPage ;";
-}																																											
- 
+if ($sorter == 'all' || $sorter == '') {
+  $query = "select * from books inner join book_requests on books.id = book_requests.book_id  order by date_of_request DESC limit $offset, $requestsPerPage ;";
+} else {
+  $query = "select * from books inner join book_requests on books.id = book_requests.book_id WHERE status='$sorter' order by date_of_request DESC limit $offset, $requestsPerPage ;";
+}
+
 
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_execute($stmt);
@@ -85,98 +85,97 @@ if ($logintype != "admin") {
   <link rel="stylesheet" href="assets/css/animate.css" />
   <script src="./scripts/script.js"></script>
   <script>
-  
+    function checkAll(checkbox) {
+      var checkboxes = document.getElementsByName('check');
+      var checkeditem = document.querySelector('.form-check-input:checked').value;
 
-  
-  
-  	function checkAll(checkbox) {
-    var checkboxes = document.getElementsByName('check');
-	var checkeditem = document.querySelector('.form-check-input:checked').value;
-	
-	
-		
-    checkboxes.forEach((item) => {
-		
+
+
+      checkboxes.forEach((item) => {
+
         if (item !== checkbox) item.checked = false;
-	
-	
-    })
-	
+
+
+      })
 
 
 
 
 
 
-	
-	
-	
-	
-}
-  function onChange(element) {
-    	
-  var inputs = document.querySelectorAll('input[type="checkbox"]');
-  var arrData = [];
-  // For each inputs...
-  inputs.forEach(function(input){
-    // ... save what you want (but 'ID' and 'checked' values are necessary)
-    arrData.push({ id: input.id, checked: input.checked });
-  });
-  // Save in localStorage
-  localStorage.setItem('inputs', JSON.stringify(arrData));
 
-  console.log(JSON.stringify(arrData));
-  // [
-  //   {
-  //     'id': 'ch1',
-  //     'checked': false  // or true
-  //   },
-  //   ... and so on
-  // ]
-		
-		
-		const urlParams = new URLSearchParams(window.location.search);
 
-        urlParams.set('value', element.value);
-        urlParams.set('pagenum','1')
-        window.location.search = urlParams;
-		
-		
-		
-		
-		
-		
+
+
+
+    }
+
+    function onChange(element) {
+
+      var inputs = document.querySelectorAll('input[type="checkbox"]');
+      var arrData = [];
+      // For each inputs...
+      inputs.forEach(function(input) {
+        // ... save what you want (but 'ID' and 'checked' values are necessary)
+        arrData.push({
+          id: input.id,
+          checked: input.checked
+        });
+      });
+      // Save in localStorage
+      localStorage.setItem('inputs', JSON.stringify(arrData));
+
+      console.log(JSON.stringify(arrData));
+      // [
+      //   {
+      //     'id': 'ch1',
+      //     'checked': false  // or true
+      //   },
+      //   ... and so on
+      // ]
+
+
+      const urlParams = new URLSearchParams(window.location.search);
+
+      urlParams.set('value', element.value);
+      urlParams.set('pagenum', '1')
+      window.location.search = urlParams;
+
+
+
+
+
+
     }
 
 
 
-	
-$(document).ready(function(){
-	
-	
-var wat= JSON.parse(window.localStorage.getItem('inputs'));
 
-for(var p in wat)
-    {
-    
-      {
-         
-		 $('#'+ wat[p].id).prop('checked', wat[p].checked);
+    $(document).ready(function() {
+
+
+      var wat = JSON.parse(window.localStorage.getItem('inputs'));
+
+      for (var p in wat) {
+
+        {
+
+          $('#' + wat[p].id).prop('checked', wat[p].checked);
+        }
       }
-    }
 
-	
 
-	
-    $('.receivedbtn').click(function(event){
+
+
+      $('.receivedbtn').click(function(event) {
         // your stuff here
-       
-        event.stopPropagation();
-		 
-    });
-	
 
-});
+        event.stopPropagation();
+
+      });
+
+
+    });
   </script>
 
   <style>
@@ -199,7 +198,7 @@ for(var p in wat)
     <div class="container" style="max-width:1150px;">
       <div class="d-flex">
 
-        <div class="d-inline-flex align-items-center " style="">
+        <div class="d-inline-flex align-items-center ">
           <button onclick="Opensidenav()" class=" ml-2 mr-1 ml-md-0 d-sm-block d-md-none my-0 align-items-center d-flex " type="button" style="background-color:white;font-size:25px;border:1px solid #F2FCFF;border-radius:3px;">
             <span class="fas fa-bars my-1 opensidenav " style="background-color:white;color:black;line-height:1.1!important"></span>
           </button>
@@ -209,7 +208,7 @@ for(var p in wat)
         </div>
 
 
-        <div class="d-flex " style="">
+        <div class="d-flex ">
           <div class="collapse navbar-collapse ml-0  " id="collapsibleNavbar">
             <ul class="navbar-nav ">
               <li class="nav-item ">
@@ -223,7 +222,7 @@ for(var p in wat)
         </div>
 
         <div class="collapse navbar-collapse ml-1   " id="collapsibleNavbar">
-          <div class=" d-flex ml-auto " style="">
+          <div class=" d-flex ml-auto ">
 
 
             <ul class="navbar-nav ">
@@ -336,38 +335,38 @@ for(var p in wat)
           <!-- Tab panes -->
           <div class="tab-content justify-content-center">
             <div id="home" class="container tab-pane active mt-3">
-				<div class="inline-flex w-100 ">
-                  <div class="form-check-inline">
-                    <label class="form-check-label">
-                      <input type="checkbox" id="ch1" onclick="checkAll(this)" onchange="onChange(this)" value="all" name="check" class="form-check-input"> All
-                    </label>
-                  </div>
-				  <div class="form-check-inline">
-                    <label class="form-check-label">
-                      <input type="checkbox" id="ch2" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="pending" class="form-check-input"> Pending
-                    </label>
-                  </div>
-				  <div class="form-check-inline">
-                    <label class="form-check-label">
-                      <input type="checkbox" id="ch3" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="confirmed" class="form-check-input"> Confirmed
-                    </label>
-                  </div>
-				  <div class="form-check-inline">
-                    <label class="form-check-label">
-                      <input type="checkbox" id="ch4" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="received" class="form-check-input"> Received
-                    </label>
-                  </div>
-				  <div class="form-check-inline">
-                    <label class="form-check-label">
-                      <input type="checkbox" id="ch5" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="returned" class="form-check-input"> Returned
-                    </label>
-                  </div>
-                
+              <div class="inline-flex w-100 ">
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input type="checkbox" id="ch1" onclick="checkAll(this)" onchange="onChange(this)" value="all" name="check" class="form-check-input"> All
+                  </label>
+                </div>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input type="checkbox" id="ch2" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="pending" class="form-check-input"> Pending
+                  </label>
+                </div>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input type="checkbox" id="ch3" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="confirmed" class="form-check-input"> Confirmed
+                  </label>
+                </div>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input type="checkbox" id="ch4" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="received" class="form-check-input"> Received
+                  </label>
+                </div>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input type="checkbox" id="ch5" onclick="checkAll(this)" onchange="onChange(this)" name="check" value="returned" class="form-check-input"> Returned
+                  </label>
+                </div>
 
-                </div>					  
-												 
 
-              <div id="target-content" class="productsitemlist   mt-2 mx-0 mx-md-0" style="">
+              </div>
+
+
+              <div id="target-content" class="productsitemlist   mt-2 mx-0 mx-md-0">
                 <?php
 
                 while ($request = mysqli_fetch_assoc($result)) {
@@ -384,70 +383,80 @@ for(var p in wat)
                             <p class="card-text itemdescription my-1  w-100">Borrower: ' . $request['borrower_fn'] . " " . $request['borrower_ln'] . '</p>
                             <p class="card-text itemdescription my-1  w-100">Status: ' . $request['status'];
 
-                            //If request confirmed, calculate days of borrow duration
-                            if ($request['status'] == "confirmed") {
-                              $today = new DateTime("Now");
-                              $deadline = new DateTime($request['date_of_process'] . '+ 5 days');
-                              $duration = date_diff($deadline, $today);
-                            
-                              echo ' <button name="book_borrowed" value=' . $request['id'] .  ' class="mx-2 receivedbtn"   >Book is borrowed</button> </p>';
-                              echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
-                            }
+                  //If request confirmed, calculate days of borrow duration
+                  if ($request['status'] == "confirmed") {
+                    $today = new DateTime("Now");
+                    $deadline = new DateTime($request['date_of_process'] . '+ 5 days');
+                    $duration = date_diff($deadline, $today);
 
-																				 
-                            if ($request['status'] == "borrowed") {
-                              $today = new DateTime("Now");
-                              $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
-                              $duration = date_diff($deadline, $today);
-		
-                              echo ' <button name="book_returned" value=' . $request['id'] .  ' class="mx-2 receivedbtn"   >Book is returned</button> </p>';
-                              echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
-                            }
-                          echo '</div>
+                    echo ' <button name="book_borrowed" value=' . $request['id'] .  ' class="mx-2 receivedbtn"   >Book is borrowed</button> </p>';
+                    echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
+                  }
+
+
+                  if ($request['status'] == "borrowed") {
+                    $today = new DateTime("Now");
+                    $deadline = new DateTime($request['date_of_process'] . '+ 7 days');
+                    $duration = date_diff($deadline, $today);
+
+                    echo ' <button name="book_returned" value=' . $request['id'] .  ' class="mx-2 receivedbtn"   >Book is returned</button> </p>';
+                    echo '<p class="card-text itemdescription my-1  w-100">Days Remaining: ' . $duration->format('%a days') . '</p>';
+                  }
+
+                  if ($request['status'] == "returned") {
+                    if ($request['return_isLate']) {
+                      echo '<p class="card-text itemdescription my-1  w-100">Returned On Time: No </p>';
+                      echo '<p class="card-text itemdescription my-1  w-100">Return Date: ' . $request['date_of_process'] . '</p>';
+                    } else {
+                      echo '<p class="card-text itemdescription my-1  w-100">Returned On Time: Yes </p>';
+                      echo '<p class="card-text itemdescription my-1  w-100">Return Date: ' . $request['date_of_process'] . '</p>';
+                    }
+                  }
+                  echo '</div>
                         </div>
                       </div>
                     </div>
                   </form>';
-						
-						
                 }
                 ?>
                 <div class="d-flex flex-row pagination mt-2 text-dark">
-<?php if ($totalPages != 0){ ?>
-																										   
-                  <?php
-                  if ($totalPages > 1) {
-                    echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=1&value='.$sorter.'">First</a>';
-                  }
+                  <?php if ($totalPages != 0) { ?>
 
-                  if ($totalPages != 1) {
-                    /* First we check if we are on page one. If we are then we don't need a link to 
+                    <?php
+                    if ($totalPages > 1) {
+                      echo '<a class="page mx-1 px-3 py-1 " href="?pagenum=1&value=' . $sorter . '">First</a>';
+                    }
+
+                    if ($totalPages != 1) {
+                      /* First we check if we are on page one. If we are then we don't need a link to 
                          the previous page or the first page so we do nothing. If we aren't then we
                          generate links to the first page, and to the previous page. */
-                    if ($pageNum > 1) {
-                      // Render clickable number links that should appear on the left of the target page number
-                      for ($i = $pageNum - 2; $i < $pageNum; $i++) {
-                        if ($i > 0) {
-                                 echo '<a class="page mx-1 px-3 py-1 " href="' . $_SERVER['PHP_SELF'] . '?pagenum=' . $i . '&value='.$sorter.'">' . $i . '</a>';
+                      if ($pageNum > 1) {
+                        // Render clickable number links that should appear on the left of the target page number
+                        for ($i = $pageNum - 2; $i < $pageNum; $i++) {
+                          if ($i > 0) {
+                            echo '<a class="page mx-1 px-3 py-1 " href="' . $_SERVER['PHP_SELF'] . '?pagenum=' . $i . '&value=' . $sorter . '">' . $i . '</a>';
+                          }
+                        }
+                      }
+                      // Render the target page number, but without it being a link
+                      echo '<a class="page mx-1 px-3 py-1 " style = "background-color: #A31F1F">' . $pageNum . '</a>';
+                      // Render clickable number links that should appear on the right of the target page number
+                      for ($i = $pageNum + 1; $i <= $totalPages; $i++) {
+                        echo '<a class="page mx-1 px-3 py-1 disabled" href="' . $_SERVER['PHP_SELF'] . '?pagenum=' . $i . '&value=' . $sorter . '">' . $i . '</a>';
+                        if ($i >= $pageNum + 2) {
+                          break;
                         }
                       }
                     }
-                    // Render the target page number, but without it being a link
-                    echo '<a class="page mx-1 px-3 py-1 " style = "background-color: #A31F1F">' . $pageNum . '</a>';
-                    // Render clickable number links that should appear on the right of the target page number
-                    for ($i = $pageNum + 1; $i <= $totalPages; $i++) {
-                   echo '<a class="page mx-1 px-3 py-1 disabled" href="' . $_SERVER['PHP_SELF'] . '?pagenum=' . $i . '&value='.$sorter.'">' . $i . '</a>';
-                      if ($i >= $pageNum + 2) {
-                        break;
-                      }
-                    }
-                  }
 
-                  ?>
-                  <a class="page mx-1 px-3 py-1 " href="?pagenum=<?php echo $totalPages."&value=$sorter" ?>">Last</a>
-				<?php }else {echo ('no data found');} ?>
+                    ?>
+                    <a class="page mx-1 px-3 py-1 " href="?pagenum=<?php echo $totalPages . "&value=$sorter" ?>">Last</a>
+                  <?php } else {
+                    echo ('no data found');
+                  } ?>
 
-											  
+
                 </div>
 
               </div>
