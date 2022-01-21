@@ -25,10 +25,21 @@ session_start();
 
   <script src="./scripts/script.js"></script>
   <link rel="stylesheet" href="./styles/CETproj.css" />
+<?php 
 
+$changepass = $_GET['changepass'] ?? 'true' ;
+
+if($changepass == 'false'){
+	echo "<script> $(document).ready(function(){ $('#myModal').modal('show'); }); </script>";
+}else if ($changepass == true || $changepass == ''){
+	
+}
+
+?>
 </head>
 
 <body style="background-color:white;background-size:cover;background-attachment:fixed;">
+
   <div id="myModal" class="modal fade">
     <div class="modal-dialog ">
       <div class="modal-content my-5 modal-loginform" autocomplete="false">
@@ -49,14 +60,22 @@ session_start();
               </div>
 
               <input type="password" name="newPass" class="form-control" required="required" autocomplete="off" autocomplete="false">
-            </div>
+            </div>		  <?php  if($changepass == 'false'){
+	echo "<p class='text-danger'>Password does not match</p>";
+}else if ($changepass == true || $changepass == ''){
+	
+}
+?>
           </div>
+		  
           <div class="modal-footer justify-content-end">
+
             <div>
               <input type="submit" class="btn btn-dark " value="Change Password">
 
             </div>
           </div>
+
         </form>
       </div>
     </div>
@@ -98,11 +117,11 @@ session_start();
 
                 </a>
               </li>
-
-
-
             </ul>
-            <div class="dropdown">
+			<?php
+               if (isset($_SESSION['logintype'])) {
+		    ?>
+             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
               </button>
@@ -111,6 +130,10 @@ session_start();
 
               </div>
             </div>
+					  
+            <?php 
+                } 
+            ?>
           </div>
         </div>
 
