@@ -29,12 +29,12 @@ if (password_verify($oldPass, $userPass)) {
         header("Location: ../index.php?success=false");
         exit();
     } else {
-        header("Location: ../index.php?success=true");
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
     }
 
 } else {
     //Password mismatch
-    header("Location: ../index.php?success=false");
+    header('Location: ' . $_SERVER['HTTP_REFERER'].'?changepass=false');
     exit();
 }
