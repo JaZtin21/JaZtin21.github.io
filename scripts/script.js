@@ -12,6 +12,8 @@ function checkAll(checkBox) {
 }
 
 $(document).ready(function () {
+	
+
 
   $("#search").keyup(function () {
     var title = $("#search").val();
@@ -30,6 +32,7 @@ $(document).ready(function () {
       })
     }
   });
+  
   $('.owlhero').owlCarousel({
 
     margin: 5,
@@ -75,6 +78,9 @@ $(document).ready(function () {
       }
     }
   });
+  $('#myModal').on('hidden.bs.modal', function (e) {
+  $("#modalbtnclose").click();
+});
   const signUpButton = document.getElementById('signUp');
   const signInButton = document.getElementById('signIn');
   const container = document.getElementById('container');
@@ -86,8 +92,12 @@ $(document).ready(function () {
   signInButton.addEventListener('click', () => {
     container.classList.remove("right-panel-active");
   });
+  
+
 
 });
+
+
 
 
 
