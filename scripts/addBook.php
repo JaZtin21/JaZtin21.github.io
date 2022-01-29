@@ -14,6 +14,7 @@ if (isset($_POST['submit'])) {
     $publisher = $_POST['publisher'];
     $description = $_POST['description'];
     $image = uploadFile();
+	$downloadablefile = downloadablefile();
 }
 
 //Check if book is already existing in the database
@@ -27,10 +28,10 @@ $books = mysqli_fetch_assoc($result);
 
 if (is_null($books)) {
     //Add/Insert book into the database
-    $query = "INSERT INTO books (title, author, isbn, publisher, description, image) VALUES(?, ?, ?, ?, ?, ?);";
+    $query = "INSERT INTO books (title, author, isbn, publisher, description, image, downloadablefile) VALUES(?, ?, ?, ?, ?, ?, ?);";
 
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "ssssss", $title, $author, $isbn, $publisher, $description, $image);
+    mysqli_stmt_bind_param($stmt, "sssssss", $title, $author, $isbn, $publisher, $description, $image, $downloadablefile);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -48,10 +49,11 @@ if (is_null($books)) {
 
 function uploadFile()
 {
+	
     $target_dir = "../uploads/images/";
     $target_file = $target_dir . basename($_FILES['image']['name']);
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
+if($_FILES['image']['name'] != "") {
     if (isset($_POST['submit'])) {
         $checkFile = getimagesize($_FILES['image']['tmp_name']);
         if ($checkFile !== false) {
@@ -77,4 +79,55 @@ function uploadFile()
         header('Location: ../ManageBookspageAdd.php?success=false&error=upload');
         exit();
     }
+}else{
+		return htmlspecialchars(basename(NULL));
+		
+	}
 }
+
+function downloadablefile() {
+	if (isset($_POST['submit'])) {
+		
+		// name of the uploaded file
+    $filename = $_FILES['myfile']['name'];
+
+    // destination of the file on the server
+    $destination = '../uploads/downloadablefiles/' . $filename;
+
+    // get the file extension
+    $extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+    // the physical file on a temporary uploads directory on the server
+    $file = $_FILES['myfile']['tmp_name'];
+    $size = $_FILES['myfile']['size'];
+
+    if ($size != 0){
+    if (!in_array($extension, ['pdf', 'docx'])) {
+        header('Location: ../ManageBookspageAdd.php?success=false&error=InvalidFile');
+		exit();
+    } elseif ($_FILES['myfile']['size'] > 1000000) { // file shouldn't be larger than 1Megabyte
+       header('Location: ../ManageBookspageAdd.php?success=false&error=notFile');
+	   exit();
+    } else {
+		
+		if (move_uploaded_file($file, $destination)) {
+        return htmlspecialchars(basename($_FILES['myfile']['name']));
+    } else {
+        header('Location: ../ManageBookspageAdd.php?success=false&error=upload');
+        exit();
+    }
+    }
+	}else {
+		return htmlspecialchars(basename(NULL));
+		
+	}
+        // move the uploaded (temporary) file to the specified destination
+
+    }
+		
+	}
+	
+	
+	
+
+?>
