@@ -291,8 +291,9 @@ echo removeqsvar($s,$v);
 				
                     </div>	
 					<div class="mt-2">
-					<input type='file' name="image" class="fileinput" required onchange="readURL(this);">
+					<input type='file' name="image" class="fileinput"  onchange="readURL(this);">
 					</div>
+					
 				</div>
 									<div class="modal-body  ">
 										<div class="form-group">
@@ -317,6 +318,10 @@ echo removeqsvar($s,$v);
 											<label>Description:</label>
 											<textarea rows="5" input name="description" type="text" class="form-control"  autocomplete="off" autocomplete="false"></textarea>
 										</div>
+										<div class="form-group">
+									     	<label>Downloadable File:</label><br>
+											<input type="file" name="myfile"  class="fileinput" onchange="readURL(this);"> 
+										</div>
 									</div>
 									<div class="modal-footer justify-content-center my-0 ">
 										<input type="submit" name="submit" class="btn btn-dark bg-dark" value="Add Book" style="width:100%;border:1px solid black;color:white">
@@ -332,6 +337,12 @@ echo removeqsvar($s,$v);
 														break;
 													case "fileType":
 														echo "<p style='color: red;'>File type is not an image. Book is not added.</p>";
+														break;
+													case "notFile":
+														echo "<p style='color: red;'>Downloadable File is not a File. Please try again later.</p>";
+														break;
+													case "InvalidFile":
+														echo "<p style='color: red;'>Downloadable File is not in PDF or Word format. Please try again later.</p>";
 														break;
 													case "upload":
 														echo "<p style='color: red;'>Book is not uploaded. Please try again later.</p>";
@@ -360,45 +371,6 @@ echo removeqsvar($s,$v);
 
 
 </div>
-
-<!-- 		<form action="confirmation.php" method="post" autocomplete="false" autocomplete="off"  >
-				<div class="modal-header align-items-center justify-content-center">				
-					<h4 class="modal-title">Advanced Search</h4>
-		
-				</div>
-				<div class="modal-body">				
-					<div class="form-group">
-						<label>Title:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-					<div class="form-group">
-						<label>Author:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-	                <div class="form-group">
-						<label>ISBN:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-					
-
-                    <div class="form-group">
-						<label>Publisher:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-					<div class="form-group">
-						<label>Keyword:</label>
-						<input type="text" class="form-control" required="required" autocomplete="off"  autocomplete="false" >
-					</div>
-				</div>
-				<div class="modal-footer justify-content-center">
-					
-		
-					<input type="submit" class="btn btn-light"   value="Search" style="background-color:white !important;color:black;width:50%;box-shadow:0px 1px 1px 0px black;">
-				</div>
-			</form> -->
-		
-
-
 
 </div>
 

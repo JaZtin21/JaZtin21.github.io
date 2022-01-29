@@ -2,7 +2,20 @@
 include('database.php');
 
 	session_start();
+	
+$id = $_GET['id'];
 
+  $firstname = $_SESSION['firstname']??'';
+  $lastname = $_SESSION['lastname']??'';
+
+
+
+   $useid="";
+   $user_id = "SELECT * FROM `accounts` WHERE firstname='".$firstname."' && lastname='".$lastname."' ";
+   $str = mysqli_query($conn, $user_id);
+   while($rower = mysqli_fetch_assoc($str)) {
+	  $useid = $rower['id'];
+   }
 ?>
 
 <!DOCTYPE html>
@@ -166,6 +179,25 @@ echo removeqsvar($s,$v);
     </div>
   </div>
 
+<div class="modal fade" id="dlmodal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-light" style="background-color:#9f3535;" >
+        <h5 class="modal-title ">Download File</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="text-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>The download button for this book on this account will be lost forever after 7 days when the file is downloaded, do you still wish to continue?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		<button type="button" class="btn btn-primary" onclick="location.href='download.php?file_id=<?php echo $id ?>&userid=<?php echo $useid?>';" data-dismiss="modal" >Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <nav class="navbar-expand-md sticky-top py-1" style="background-color:#A31F1F;box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);box-shadow:   0px 0.1px 5px 0px white; z-index:5;" >
 <div class="container" style="max-width:1150px;">
@@ -424,7 +456,7 @@ $bookb= $row_db[0]??'';
 ?>
 
 
-
+<a class='bg-dark text-light px-2 py-1 mx-1' data-toggle="modal" data-target="#dlmodal"  ><i class='fas fa-download '  ></i></a>
       
 <?php
  if ($useid == ""){
