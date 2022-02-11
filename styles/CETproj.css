@@ -931,6 +931,15 @@ color:white;
 	
 
 }
+.Sidenavbutton .fas{
+	width:1rem!important;
+	margin-right: 1rem;
+	
+}
+.Sidenavbutton:hover {
+	background-color:#a31f1f;
+	color:white;
+}
 
 .sign-up-container{
 	width:100%!important;
