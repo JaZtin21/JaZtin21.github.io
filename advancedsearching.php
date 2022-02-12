@@ -433,15 +433,17 @@ if ($sortby == "" || $sortby == "ASC"){
 
     $query = "SELECT * FROM books";
     $conditions = array();
-	$build = "";
+	$build = array();
+	
     $bindType = "";
 
     if(! empty($title)) {
 
       $conditions[] = "title LIKE ? ";
 	  $bindType .= "s" ; 
-	  $keywords = "%" . $title . "%";
-	  $build = array(&$keywords);
+	  $keywordst = "%" . $title . "%";
+	  
+	  array_splice( $build, 1, 0, array( &$keywordst ) ); 
 
 	  
 
@@ -454,8 +456,8 @@ if ($sortby == "" || $sortby == "ASC"){
 	  
 	  $conditions[] = "author LIKE ? ";
 	  $bindType .= "s" ; 
-	  $keywords = "%" . $author . "%";
-	  $build = array(&$keywords);
+	  $keywordsa = "%" . $author . "%";
+	    array_splice( $build, 1, 0, array( &$keywordsa ) ); 
 
 	  
     }
@@ -464,8 +466,8 @@ if ($sortby == "" || $sortby == "ASC"){
 	  
 	  $conditions[] = "isbn LIKE  ? ";
 	  $bindType .= "s" ; 
-	  $keywords = "%" . $isbn . "%";
-	  $build = array(&$keywords);
+	  $keywordsi = "%" . $isbn . "%";
+	    array_splice( $build, 1, 0, array( &$keywordsi ) ); 
 	
     }
     if(! empty($publisher)) {
@@ -473,17 +475,29 @@ if ($sortby == "" || $sortby == "ASC"){
 	  
 	  $conditions[] = "publisher LIKE ? ";
 	  $bindType .= "s" ; 
-	  $keywords = "%" . $publisher . "%";
-	  $build = array(&$keywords);
+	  $keywordsp = "%" . $publisher . "%";
+	  array_splice( $build, 1, 0, array( &$keywordsp ) ); 
 	 
 	  
 	  
     }
 	if(! empty($keyword)) {
+	  
+	  
+	  unset($conditions);
+	 
+	   
       $conditions[] = "title LIKE ? OR author LIKE ? OR isbn LIKE ? OR publisher LIKE ? ";
-	  $bindType .= "ssss" ;
-	  $keywords = "%" . $keyword . "%";
-	  $build = array(&$keywords, &$keywords,&$keywords,&$keywords);
+	  
+	  $bindType = "ssss" ;
+	  
+	  $keywordsk = "%" . $keyword . "%";
+	  
+	  
+	  unset($build);
+      $build = array_values(array( &$keywordsk, &$keywordsk, &$keywordsk, &$keywordsk ) );
+	  
+	
 	  
 	 
 	  
@@ -491,26 +505,50 @@ if ($sortby == "" || $sortby == "ASC"){
 	  
 
     }
-   
+
     $sql = $query;
+	$sqlc =  "SELECT * FROM books";
+	
     if (count($conditions) > 0) {
       $sql .= " WHERE " . implode(' AND ', $conditions);
       $sql .= "ORDER BY title $sortby LIMIT $start_from, $limit";
 	  
-	  $stmt = mysqli_prepare($conn,$sql);
-      call_user_func_array(array($stmt, "bind_param"), array_merge(array($bindType), $build));
-
-      mysqli_stmt_execute($stmt);
+	
 	  
+	  $sqlc .= " WHERE " . implode(' AND ', $conditions);
+	  $sqlc .= "ORDER BY title $sortby ";
+	 
+	
+	  $stmt = mysqli_prepare($conn,$sql);
+	  $strti =  mysqli_prepare($conn,$sqlc);
+		
+		
+      call_user_func_array(array($stmt, "bind_param"), array_merge(array($bindType), $build));
+	  call_user_func_array(array($strti, "bind_param"), array_merge(array($bindType), $build));
+      
+	  
+	  mysqli_stmt_execute($strti);
+     
+	 
+	  
+	  mysqli_stmt_store_result($strti);
+	  $totali = mysqli_stmt_num_rows($strti);
+	  
+	 
+	  
+	  
+	
+	 
 	  
 
     } 
    
 	
-    
+     mysqli_stmt_execute($stmt);
+
+
+
 	$bookselect = mysqli_stmt_get_result($stmt);
-
-
 
 
 
@@ -522,33 +560,8 @@ if ($sortby == "" || $sortby == "ASC"){
 	
 $adjacents = 1;
 
-    $query = "SELECT COUNT(*) FROM books";
-    $conditions = array();
 
-    if(! empty($title)) {
-      $conditions[] = "title LIKE '%".$title."%'";
-    }
-    if(! empty($author)) {
-      $conditions[] = "author LIKE '%".$author."%'";
-    }
-    if(! empty($isbn)) {
-      $conditions[] = "isbn LIKE '%".$isbn."%'";
-    }
-    if(! empty($publisher)) {
-      $conditions[] = "publisher LIKE '%".$publisher."%'";
-    }
-	if(! empty($keyword)) {
-      $conditions[] = "title LIKE '%".$keyword."%' OR author LIKE '%".$keyword."%' OR isbn LIKE '%".$keyword."%' OR publisher LIKE '%".$keyword."%'";
-    }
-
-    $result_db = $query;
-    if (count($conditions) > 0) {
-      $result_db .= " WHERE " . implode(' AND ', $conditions);
-      $result_db .= "ORDER BY title $sortby ";
-
-    }
-$row_db = mysqli_fetch_row(mysqli_query($conn,$result_db));  
-$total_pages = $row_db[0];  
+$total_pages = $totali;  
 	
 	/* Setup vars for query. */
 	$limit = 5; 								//how many items to show per page

@@ -2,7 +2,7 @@
 
 include('database.php');
 
-
+date_default_timezone_set('Asia/Shanghai'); 
 
   $userid = $_GET['userid'];
   $file_id = $_GET['file_id'];
@@ -37,9 +37,11 @@ include('database.php');
     exit;
     }else{
 echo "File does not exist.";
-	}}else{
-		 header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit();
+	}
+	}else{
+		echo "File does not exist.";
+		
 	}
 
+   
 ?>

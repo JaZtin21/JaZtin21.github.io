@@ -584,8 +584,46 @@ while($rowb = mysqli_fetch_assoc($bookselectb)) {
 }
 }
 
- if ( $useid != ""   ) {   
-    echo"<a class='bg-dark text-light px-2 py-1 mx-1' data-toggle='modal' data-target='#dlmodal' ><i class='fas fa-download '  ></i></a>";
+ if ( $useid != ""   ) {  
+ 
+   $sql = "SELECT * FROM download_record WHERE user_id=$useid AND book_id=$id";
+   $result = mysqli_query($conn, $sql);
+   $num_rows = mysqli_num_rows($result);
+   
+   $exist = mysqli_fetch_assoc($result);
+   
+  date_default_timezone_set('Asia/Shanghai');   
+   
+   if ($num_rows > 0){
+  
+   $newDate = $exist["download_due"];
+   $compare_due = date("d-m-Y H:i:s", strtotime($newDate));  
+   $timestamp = time();
+   $compare_current = date("d-m-Y H:i:s", $timestamp);
+   
+  
+   }
+   
+   if($num_rows == 0){
+	 echo"<a class='bg-dark text-light px-2 py-1 mx-1' data-toggle='modal' data-target='#dlmodal' ><i class='fas fa-download '  ></i></a>";	   
+   }else if($num_rows > 0 && $compare_due > $compare_current){
+	   
+	   
+	   echo"<a class='bg-dark text-light px-2 py-1 mx-1' data-toggle='modal' data-target='#dlmodal' ><i class='fas fa-download '  ></i></a>";	 
+	     $datediff = abs(strtotime($compare_due) - strtotime($compare_current));
+         
+        echo round($datediff / (60 * 60 * 24)),'d';
+         
+   }else if($num_rows > 0 && $compare_due <= $compare_current){
+	   
+	   echo"<a class='bg-dark text-light px-2 py-1 mx-1 text-decoration-none'  >Expired</a>";	
+   }
+   
+   
+  
+    
+	
+	
  }else{
 	 echo"<a class='bg-dark text-light px-2 py-1 mx-1' href='loginpage.php' ><i class='fas fa-download '  ></i></a>";
 	 
@@ -642,6 +680,7 @@ echo '<img class="bookimg text-center "  alt="No Image Preview" src="./uploads/i
 <h2><?php echo $row["title"]; ?></h2>
 <h5>Author(s): <i class="notitalic" style="color:#686868;font-style: normal;"><?php echo $row["author"]; ?></i></h5>
 <h6 class="mt-3">ISBN: <i class="notitalic" style="color:#686868;font-style: normal;"> <?php echo $row["isbn"]; ?></i></h6>
+<h6 class="">Publisher: <i class="notitalic" style="color:#686868;font-style: normal;"><?php echo $row["publisher"]; ?></i></h6>
 <h6 class="">Subject: <i class="notitalic" style="color:#686868;font-style: normal;"><?php echo $row["subject"]; ?></i></h6>
 <h6 class="">Document Type:</h6>
 <h6 class="">Number of Copies:</h6>
@@ -662,6 +701,7 @@ echo '<img class="bookimg text-center "  alt="No Image Preview" src="./uploads/i
 <h5>Author(s): <i class="notitalic" style="color:#686868;font-style: normal;"><?php echo $row["author"]; ?></i></h5>
 <div class="collapse" id="collapseExample">
 <h6 class="mt-3">ISBN: <i class="notitalic" style="color:#686868;font-style: normal;"> <?php echo $row["isbn"]; ?></i></h6>
+<h6 class="">Publisher: <i class="notitalic" style="color:#686868;font-style: normal;"><?php echo $row["publisher"]; ?></i></h6>
 <h6 class="">Subject: <i class="notitalic" style="color:#686868;font-style: normal;"><?php echo $row["subject"]; ?></i></h6>
 <h6 class="">Document Type:</h6>
 <h6 class="">Number of Copies:</h6>
