@@ -959,7 +959,8 @@ color:white;
 
 .borrowbutton {
   position: relative;
- display: flex; flex-direction:row-reverse;
+ display: flex; 
+ justify-content: end;
   
    
 }
