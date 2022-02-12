@@ -908,6 +908,11 @@ color:white;
 
 	
 }
+.Sidenavbutton .fas{
+	width:2rem!important;
+	margin-right: 1rem;
+	
+}
 
 @media screen and (max-width: 47.99em) {
 		.sign-in-container {
